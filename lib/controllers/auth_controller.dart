@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import '../routes/pages_routes.dart';
 
 class AuthController extends GetxController {
+  var isLoading = false.obs;
   final storage = GetStorage();
   final AuthApi authApi = Get.find<AuthApi>();
   final Rx<Usuario?> _usuario = Rx<Usuario?>(null);
@@ -46,13 +47,10 @@ class AuthController extends GetxController {
   }) async {
     try {
       if (pin.isEmpty || usuario.isEmpty || password.isEmpty) {
-        Get.snackbar(
-          'Error',
-          'Todos los campos son obligatorios',
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        SnackbarHelper.show('Todos los campos son obligatorios');
         return;
       }
+      isLoading.value = true;
 
       final response = await authApi.iniciarSesion(
         pin: pin,
@@ -71,6 +69,8 @@ class AuthController extends GetxController {
       Get.offAllNamed('/home');
     } catch (e) {
       SnackbarHelper.show(e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 

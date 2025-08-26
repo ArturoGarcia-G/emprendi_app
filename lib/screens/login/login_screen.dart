@@ -53,30 +53,46 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 48,
-                child: ElevatedButton.icon(
-                  icon: FaIcon(
-                    FontAwesomeIcons.rightToBracket,
-                    color: Colors.white,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    textStyle: TextStyle(fontSize: 16),
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                  ),
-                  label: Text(
-                    'Iniciar sesión',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                child: Obx(() {
+                  return ElevatedButton.icon(
+                    icon: authController.isLoading.value
+                        ? SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : FaIcon(
+                            FontAwesomeIcons.rightToBracket,
+                            color: Colors.white,
+                          ),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                      textStyle: TextStyle(fontSize: 16),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                     ),
-                  ),
-                  onPressed: () {
-                    authController.iniciarSesion(
-                      pin: pinCtrl.text,
-                      usuario: usuarioCtrl.text,
-                      password: passwordCtrl.text,
-                    );
-                  },
-                ),
+                    label: Text(
+                      authController.isLoading.value
+                          ? 'Cargando...'
+                          : 'Iniciar sesión',
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                    onPressed: () {
+                      authController.iniciarSesion(
+                        pin: pinCtrl.text,
+                        usuario: usuarioCtrl.text,
+                        password: passwordCtrl.text,
+                      );
+                    },
+                  );
+                }),
               ),
             ],
           ),
