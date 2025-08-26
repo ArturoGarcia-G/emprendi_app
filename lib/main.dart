@@ -15,6 +15,7 @@ import './core/helpers/app_binding.dart';
 import './core/themes/app_theme.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
 void main() async {
   //await dotenv.load();
   await GetStorage.init();
@@ -50,9 +51,15 @@ class EmprendiApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       builder: (BuildContext context, Widget? widget) {
+        // Pantalla de error custom
         ErrorWidget.builder = (FlutterErrorDetails errorDetails) =>
             CustomErrorScreen(errorDetails: errorDetails);
-        return widget!;
+
+        // 🔑 Envolver todo en Overlay con overlayKey
+        return Overlay(
+          key: overlayKey,
+          initialEntries: [OverlayEntry(builder: (context) => widget!)],
+        );
       },
       getPages: pages,
       routingCallback: (routing) => PagesRoutes.fnRoutingCallback(routing!),

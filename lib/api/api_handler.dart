@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart' as dio;
-import 'package:emprendi_app/core/helpers/snackbar_herlper.dart';
+import 'package:emprendi_app/core/helpers/logger_helper.dart';
 import 'package:get/get.dart';
 import '../core/themes/color_palette.dart';
 
@@ -23,9 +23,22 @@ class ApiHandler {
       String urlModulo = endpoint.isEmpty ? modulo : '$modulo/$endpoint';
       final response = await _dio.get('/$urlModulo', queryParameters: filtros);
       return _parseResponse(response);
-    } on dio.DioException catch (e) {
-      _handleDioError(e);
-      rethrow;
+    } on dio.DioException catch (dioError) {
+      // Manejo de errores específicos de Dio
+      int statusCode = dioError.response?.statusCode ?? 0;
+
+      if (dioError.response != null) {
+        LoggerHelper.error('Respuesta del servidor con error:');
+        LoggerHelper.error(
+          'Código de estado: ${dioError.response?.statusCode}',
+        );
+        LoggerHelper.error('Mensaje: ${dioError.response?.statusMessage}');
+      } else {
+        LoggerHelper.error('Error de red: ${dioError.message}');
+        statusCode = 551;
+      }
+
+      throw Exception(_obtenerMensajeError(statusCode.toString()));
     } catch (e) {
       Get.snackbar(
         'Error inesperado',
@@ -49,17 +62,23 @@ class ApiHandler {
       final data = isUpload ? dio.FormData.fromMap(filtros) : filtros;
       final response = await _dio.post('/$urlModulo', data: data);
       return _parseResponse(response);
-    } on dio.DioException catch (e) {
-      _handleDioError(e);
-      rethrow;
+    } on dio.DioException catch (dioError) {
+      // Manejo de errores específicos de Dio
+      int statusCode = dioError.response?.statusCode ?? 0;
+
+      if (dioError.response != null) {
+        LoggerHelper.error('Respuesta del servidor con error:');
+        LoggerHelper.error(
+          'Código de estado: ${dioError.response?.statusCode}',
+        );
+        LoggerHelper.error('Mensaje: ${dioError.response?.statusMessage}');
+      } else {
+        LoggerHelper.error('Error de red: ${dioError.message}');
+        statusCode = 551;
+      }
+
+      throw Exception(_obtenerMensajeError(statusCode.toString()));
     } catch (e) {
-      Get.snackbar(
-        'Error inesperado',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: colorRojo50,
-        colorText: colorRojo500,
-      );
       rethrow;
     }
   }
@@ -68,14 +87,12 @@ class ApiHandler {
   Map<String, dynamic> _parseResponse(dio.Response response) {
     final extractedData = response.data;
     if (extractedData == null) {
-      SnackbarHelper.show('No se recibió información del servidor');
       throw Exception('No data received');
     }
 
     final codigo = int.parse(extractedData['codigo'].toString());
     if (codigo > 200) {
       final mensaje = extractedData['mensaje'] ?? 'Error desconocido';
-      SnackbarHelper.show(mensaje);
       throw Exception(mensaje);
     }
 
@@ -89,17 +106,24 @@ class ApiHandler {
     }
   }
 
-  void _handleDioError(dio.DioException e) {
-    final statusCode = e.response?.statusCode ?? 0;
-    final mensaje =
-        e.response?.data?['mensaje'] ?? 'Error de red: ${e.message}';
-
-    Get.snackbar(
-      'Error $statusCode: $mensaje',
-      e.toString(),
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: colorRojo50,
-      colorText: colorRojo500,
-    );
+  static String _obtenerMensajeError(String? status) {
+    String mensaje = 'Codigo: $status';
+    switch (status) {
+      case '404':
+        mensaje += ', Recurso no encontrado';
+        break;
+      case '405':
+        mensaje += ', Método no permitido';
+        break;
+      case '500':
+        mensaje += ', Error interno de servidor';
+        break;
+      case '551':
+        mensaje = 'Error de red, no se pudo establecer la conexión';
+        break;
+      default:
+        mensaje += ', Ocurrio un error en la petición';
+    }
+    return mensaje;
   }
 }

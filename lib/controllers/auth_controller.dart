@@ -1,4 +1,5 @@
 import 'package:emprendi_app/api/auth_api.dart';
+import 'package:emprendi_app/core/helpers/snackbar_herlper.dart';
 import 'package:emprendi_app/models/usuario.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -43,29 +44,39 @@ class AuthController extends GetxController {
     required String usuario,
     required String password,
   }) async {
-    if (pin.isEmpty || usuario.isEmpty || password.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Todos los campos son obligatorios',
-        snackPosition: SnackPosition.BOTTOM,
+    try {
+      if (pin.isEmpty || usuario.isEmpty || password.isEmpty) {
+        Get.snackbar(
+          'Error',
+          'Todos los campos son obligatorios',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
+
+      final response = await authApi.iniciarSesion(
+        pin: pin,
+        usuario: usuario,
+        password: password,
       );
-      return;
+
+      final Usuario user = response['usuario'];
+      final String token = response['access_token'];
+
+      _usuario.value = user;
+
+      final usuarioJson = user.toJson();
+      storage.write('usuario', usuarioJson);
+      storage.write('token', token);
+      Get.offAllNamed('/home');
+    } catch (e) {
+      SnackbarHelper.show(e.toString());
     }
+  }
 
-    final response = await authApi.iniciarSesion(
-      pin: pin,
-      usuario: usuario,
-      password: password,
-    );
-
-    final Usuario user = response['usuario'];
-    final String token = response['access_token'];
-
-    _usuario.value = user;
-
-    final usuarioJson = user.toJson();
-    storage.write('usuario', usuarioJson);
-    storage.write('token', token);
-    Get.offAllNamed('/home');
+  void logout() {
+    storage.erase();
+    _usuario.value = null;
+    Get.offAllNamed(PagesRoutes.loginScreen);
   }
 }
