@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-const colorBlanco = Color.fromRGBO(255, 255, 255, 1.0);
 const colorBackground = Color.fromRGBO(255, 255, 255, 1.0);
 const colorBarrierBackground = Color.fromARGB(190, 0, 0, 0);
 
-const colorPrimario = Color.fromRGBO(0, 121, 107, 1);
 
 const colorPrimario500 = Color.fromRGBO(6, 104, 208, 1.0);
 const colorPrimario600 = Color.fromRGBO(5, 86, 173, 1.0);
@@ -34,7 +32,6 @@ const colorGris = Color.fromRGBO(155, 155, 155, 1.0);
 const colorAzul50 = Color.fromRGBO(227, 242, 253, 1.0);
 
 const colorNegro = Color.fromRGBO(0, 0, 0, 1.0);
-const colorNegro900 = Color.fromRGBO(38, 34, 33, 1.0);
 
 const colorNaranja900 = Color.fromRGBO(230, 81, 0, 1.0);
 
@@ -58,7 +55,24 @@ const colorCian200 = Color.fromRGBO(128, 222, 234, 1.0);
 const colorAzulClaro = Color.fromRGBO(228, 235, 246, 1.0);
 const colorArena = Color.fromRGBO(240, 235, 192, 1.0);
 
-//COLORES PARA DASHBOARDS
+
+//Colores del tema
+const colorBlanco = Color.fromRGBO(255, 255, 255, 1.0);
+const colorNegro900 = Color.fromRGBO(38, 34, 33, 1.0);
+const colorPrimario = Color.fromRGBO(0, 121, 107, 1);
+const colorSecundario = Color.fromRGBO(77, 182, 172, 1);
+
+//Claro
+const colorBackgroundClaro = Color.fromRGBO(254, 254, 254, 1.0);
+const colorCardClaro = Color.fromRGBO(250, 250, 250, 1.0);
+const grisClaro = Color.fromRGBO(113, 113, 130, 1.0);
+
+//Oscuro
+const colorBackgroundOscuro = Color.fromRGBO(13, 16, 23, 1.0);
+const colorCardOscuro = Color.fromRGBO(22, 27, 33, 1.0);
+const gris = Color.fromRGBO(139, 148, 158, 1.0);
+
+
 
 
 
