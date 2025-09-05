@@ -1,13 +1,14 @@
+import 'package:emprendi_app/controllers/auth_controller.dart';
+import 'package:emprendi_app/models/usuario.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String nombreUsuario;
   final String avatarUrl;
   final int notificaciones;
 
   const PrimaryAppBar({
     super.key,
-    required this.nombreUsuario,
     required this.avatarUrl,
     this.notificaciones = 0,
   });
@@ -15,12 +16,24 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    //Controllers
+    final authController = Get.find<AuthController>();
+
+    //Modelos
+    Usuario? usuario = authController.usuario;
 
     return AppBar(
-      backgroundColor: appBarTheme.backgroundColor, // Fondo oscuro
+      backgroundColor: appBarTheme.backgroundColor,
       elevation: 0,
-      automaticallyImplyLeading: false, // quitamos back button automático
+      automaticallyImplyLeading: false,
       titleSpacing: 0,
+      shape: Border(
+        bottom: BorderSide(
+          color: colorScheme.outline,
+        ),
+      ),
       title: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
@@ -34,7 +47,6 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             const SizedBox(width: 12),
-            // Textos de bienvenida
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -43,7 +55,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Text(
-                  nombreUsuario,
+                  usuario?.nombreCompleto ?? '',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],

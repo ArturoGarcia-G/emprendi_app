@@ -43,7 +43,7 @@ class EmprendiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeController>(
-      init: ThemeController(), // 👈 si no está inicializado aún, lo crea aquí
+      init: ThemeController(),
       builder: (themeController) {
         return GetMaterialApp(
           navigatorKey: navigatorKey,
@@ -56,7 +56,6 @@ class EmprendiApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: SplashScreen(),
           builder: (BuildContext context, Widget? widget) {
-            // Pantalla de error custom
             ErrorWidget.builder = (FlutterErrorDetails errorDetails) =>
                 CustomErrorScreen(errorDetails: errorDetails);
 

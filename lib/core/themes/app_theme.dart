@@ -3,7 +3,6 @@ import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
-
   /// =========================
   /// THEME CLARO
   /// =========================
@@ -20,6 +19,7 @@ class AppTheme {
       onSurface: colorNegro900,
       error: colorRojo800,
       onError: colorBlanco,
+      outline: colorBordeClaro,
     ),
 
     // Fondo general
@@ -52,6 +52,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: colorPrimario,
         foregroundColor: colorBlanco,
+        padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
@@ -70,7 +71,10 @@ class AppTheme {
       color: colorBackgroundClaro,
       shadowColor: Colors.black.withOpacity(0.1),
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(color: colorBordeClaro),
+      ),
     ),
 
     // Iconos
@@ -103,13 +107,14 @@ class AppTheme {
       onSurface: colorBlanco,
       error: colorRojo800,
       onError: colorBlanco,
+      outline: colorBordeOscuro,
     ),
 
     scaffoldBackgroundColor: colorBackgroundOscuro,
 
     // AppBar
     appBarTheme: AppBarTheme(
-      backgroundColor: colorBackgroundOscuro,
+      backgroundColor: colorCardOscuro,
       foregroundColor: colorBlanco,
       elevation: 0,
     ),
@@ -122,7 +127,7 @@ class AppTheme {
 
     // BottomNavigationBar
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: colorBackgroundOscuro,
+      backgroundColor: colorCardOscuro,
       selectedItemColor: colorSecundario,
       unselectedItemColor: gris,
       showUnselectedLabels: true,
@@ -134,6 +139,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: colorSecundario,
         foregroundColor: colorNegro900,
+        padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
@@ -149,10 +155,13 @@ class AppTheme {
 
     // Tarjetas
     cardTheme: CardThemeData(
-      color: colorBackgroundOscuro,
+      color: colorCardOscuro,
       shadowColor: Colors.black.withOpacity(0.2),
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(color: colorBordeOscuro),
+      ),
     ),
 
     // Iconos

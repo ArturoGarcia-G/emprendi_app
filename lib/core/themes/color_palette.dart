@@ -66,11 +66,13 @@ const colorSecundario = Color.fromRGBO(77, 182, 172, 1);
 const colorBackgroundClaro = Color.fromRGBO(254, 254, 254, 1.0);
 const colorCardClaro = Color.fromRGBO(250, 250, 250, 1.0);
 const grisClaro = Color.fromRGBO(113, 113, 130, 1.0);
+const colorBordeClaro = Color.fromRGBO(0, 0, 0, 0.1);
 
 //Oscuro
 const colorBackgroundOscuro = Color.fromRGBO(13, 16, 23, 1.0);
 const colorCardOscuro = Color.fromRGBO(22, 27, 33, 1.0);
 const gris = Color.fromRGBO(139, 148, 158, 1.0);
+const colorBordeOscuro = Color.fromRGBO(48, 54, 61, 1.0);
 
 
 
