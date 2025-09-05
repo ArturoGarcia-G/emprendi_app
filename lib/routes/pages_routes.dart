@@ -13,4 +13,5 @@ class PagesRoutes {
   static const splashScreen = '/';
   static const loginScreen = '/login';
   static const homeScreen = '/home';
+  static const layoutScreen = '/layout';
 }
