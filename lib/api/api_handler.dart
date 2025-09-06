@@ -2,9 +2,11 @@ import 'package:dio/dio.dart' as dio;
 import 'package:emprendi_app/core/helpers/logger_helper.dart';
 import 'package:get/get.dart';
 import '../core/themes/color_palette.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ApiHandler {
   final dio.Dio _dio;
+  final GetStorage storage = GetStorage();
 
   ApiHandler({required String baseUrl})
     : _dio = dio.Dio(
@@ -12,7 +14,19 @@ class ApiHandler {
           baseUrl: baseUrl,
           contentType: dio.Headers.jsonContentType,
         ),
-      );
+      ) {
+    _dio.interceptors.add(
+      dio.InterceptorsWrapper(
+        onRequest: (options, handler) {
+          final token = storage.read('token');
+          if (token != null && token.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+          return handler.next(options);
+        },
+      ),
+    );
+  }
 
   Future<Map<String, dynamic>> get(
     String modulo,
@@ -111,6 +125,9 @@ class ApiHandler {
     switch (status) {
       case '404':
         mensaje += ', Recurso no encontrado';
+        break;
+      case '401':
+        mensaje += ', Sesión invalida o expirada';
         break;
       case '405':
         mensaje += ', Método no permitido';
