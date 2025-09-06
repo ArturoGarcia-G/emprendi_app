@@ -14,4 +14,7 @@ class PagesRoutes {
   static const loginScreen = '/login';
   static const homeScreen = '/home';
   static const layoutScreen = '/layout';
+
+  //Productos
+  static const agregarProductoScreen = '/agregar-producto';
 }

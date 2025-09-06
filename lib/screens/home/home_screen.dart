@@ -6,6 +6,7 @@ import 'package:emprendi_app/components/row_base.dart';
 import 'package:emprendi_app/controllers/auth_controller.dart';
 import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:emprendi_app/models/usuario.dart';
+import 'package:emprendi_app/routes/pages_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gap/gap.dart';
@@ -122,11 +123,17 @@ class HomeScreen extends StatelessWidget {
                                     spacing: 6,
                                     children: [
                                       Expanded(
-                                        child: BotonBase(label: 'Nueva venta'),
+                                        child: BotonBase(
+                                          label: 'Nueva venta',
+                                          fn: () => {},
+                                        ),
                                       ),
                                       Expanded(
                                         child: BotonBase(
                                           label: 'Crear producto',
+                                          fn: () => Get.toNamed(
+                                            PagesRoutes.agregarProductoScreen,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -137,10 +144,14 @@ class HomeScreen extends StatelessWidget {
                                       Expanded(
                                         child: BotonBase(
                                           label: 'Agregar cliente',
+                                          fn: () => {},
                                         ),
                                       ),
                                       Expanded(
-                                        child: BotonBase(label: 'Reportes'),
+                                        child: BotonBase(
+                                          label: 'Reportes',
+                                          fn: () => {},
+                                        ),
                                       ),
                                     ],
                                   ),
