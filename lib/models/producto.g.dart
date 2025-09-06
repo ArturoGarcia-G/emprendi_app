@@ -1,0 +1,39 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'producto.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Producto _$ProductoFromJson(Map<String, dynamic> json) => Producto(
+  productoId: json['producto_id'] as String?,
+  folio: json['folio'] as String?,
+  sku: json['sku'] as String?,
+  nombre: json['nombre'] as String?,
+  stock: (json['stock'] as num?)?.toInt(),
+  precio: (json['precio'] as num?)?.toDouble(),
+  costo: (json['costo'] as num?)?.toDouble(),
+  status: json['status'] as String?,
+  registroFecha: json['registro_fecha'] as String?,
+  registroAutorId: json['registro_autor_id'] as String?,
+  actualizacionFecha: json['actualizacion_fecha'] as String?,
+  actualizacionAutorId: json['actualizacion_autor_id'] as String?,
+  negocioId: json['negocio_id'] as String?,
+);
+
+Map<String, dynamic> _$ProductoToJson(Producto instance) => <String, dynamic>{
+  'producto_id': instance.productoId,
+  'folio': instance.folio,
+  'sku': instance.sku,
+  'nombre': instance.nombre,
+  'stock': instance.stock,
+  'precio': instance.precio,
+  'costo': instance.costo,
+  'status': instance.status,
+  'registro_fecha': instance.registroFecha,
+  'registro_autor_id': instance.registroAutorId,
+  'actualizacion_fecha': instance.actualizacionFecha,
+  'actualizacion_autor_id': instance.actualizacionAutorId,
+  'negocio_id': instance.negocioId,
+};
