@@ -116,7 +116,7 @@ class ApiHandler {
       return data;
     } else {
       // Si es otro tipo (lista, string, etc.), lo devolvemos dentro de un Map
-      return {'raw': data};
+      return {'data': data};
     }
   }
 

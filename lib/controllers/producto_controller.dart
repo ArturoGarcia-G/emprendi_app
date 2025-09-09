@@ -1,9 +1,9 @@
 import 'package:emprendi_app/core/helpers/snackbar_herlper.dart';
+import 'package:emprendi_app/models/producto.dart';
 import 'package:get/get.dart';
 import '../api/producto_api.dart';
 
 class ProductoController extends GetxController {
-  
   ProductoController();
 
   final ProductoApi productoApi = Get.find<ProductoApi>();
@@ -37,6 +37,22 @@ class ProductoController extends GetxController {
       Get.back();
     } catch (e) {
       SnackbarHelper.show(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Método para listar productos
+  Future<List<Producto>> listarProductos({Map<String, dynamic>? filtros}) async {
+    try {
+      isLoading.value = true;
+
+      final productosList = await productoApi.listarProductos(filtros: filtros);
+
+      return productosList;
+    } catch (e) {
+      SnackbarHelper.show(e.toString());
+      rethrow;
     } finally {
       isLoading.value = false;
     }
