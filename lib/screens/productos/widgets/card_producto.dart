@@ -1,4 +1,7 @@
+import 'package:emprendi_app/components/status_global.dart';
+import 'package:emprendi_app/consts/status_consts.dart';
 import 'package:emprendi_app/core/themes/color_palette.dart';
+import 'package:emprendi_app/core/utils/number_utils.dart';
 import 'package:emprendi_app/models/producto.dart';
 import 'package:emprendi_app/routes/pages_routes.dart';
 import 'package:flutter/material.dart';
@@ -35,11 +38,28 @@ class CardProducto extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      producto.nombre ?? '',
-                      style: textTheme.bodyMedium!.copyWith(
-                        color: colorScheme.onSurface,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          producto.nombre ?? '',
+                          style: textTheme.bodyMedium!.copyWith(
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                        Gap(4),
+                        producto.statusSincronizacion ==
+                                StatusConsts.sincronizado
+                            ? Icon(
+                                Icons.cloud_done_outlined,
+                                color: colorVerde500,
+                                size: 14,
+                              )
+                            : Icon(
+                                Icons.cloud_sync_outlined,
+                                color: colorGris600,
+                                size: 14,
+                              ),
+                      ],
                     ),
                     Gap(2),
                     Text(
@@ -50,7 +70,7 @@ class CardProducto extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${producto.precio}',
+                          NumberUtils.formatMoney(producto.precio ?? 0),
                           style: textTheme.bodyMedium!.copyWith(
                             color: colorScheme.primary,
                           ),
@@ -69,7 +89,8 @@ class CardProducto extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(),
+                  StatusGlobal(status: producto.status ?? ''),
+                  Gap(16),
                   Row(
                     children: [
                       GestureDetector(
