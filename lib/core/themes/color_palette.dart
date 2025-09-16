@@ -41,6 +41,7 @@ const colorRojo600 = Color.fromRGBO(229, 57, 53, 1.0);
 const colorRojo700 = Color.fromRGBO(211, 47, 47, 1.0);
 const colorRojo800 = Color.fromRGBO(198, 40, 40, 1.0);
 
+const colorVerde900 = Color.fromRGBO(12, 90, 9, 1);
 const colorVerde700 = Color.fromRGBO(32, 122, 29, 1.0);
 const colorVerde500 = Color.fromRGBO(76, 175, 80, 1.0);
 const colorVerde200 = Color.fromRGBO(216, 246, 215, 1.0);
