@@ -8,6 +8,8 @@ class Productos extends Table {
   IntColumn get stock => integer()();
   RealColumn get precio => real()();
   RealColumn get costo => real()();
+  TextColumn get status =>
+      text().withDefault(const Constant('activo'))();
 
   // Para manejar sincronización
   TextColumn get statusSincronizacion =>

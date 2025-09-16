@@ -23,6 +23,7 @@ class ProductoLocalRepository {
       stock: stock,
       precio: precio,
       costo: costo,
+      status: const Value('activo'),
       statusSincronizacion: const Value('creacion_pendiente'),
     );
 
@@ -37,13 +38,15 @@ class ProductoLocalRepository {
     // Mapeamos ProductoEntity a Producto
     return entities
         .map(
-          (e) => model.Producto(
-            productoId: e.uuid,
-            sku: e.sku,
-            nombre: e.nombre,
-            stock: e.stock,
-            precio: e.precio,
-            costo: e.costo,
+          (entity) => model.Producto(
+            productoId: entity.uuid,
+            sku: entity.sku,
+            nombre: entity.nombre,
+            stock: entity.stock,
+            precio: entity.precio,
+            costo: entity.costo,
+            status: entity.status,
+            statusSincronizacion: entity.statusSincronizacion,
           ),
         )
         .toList();
