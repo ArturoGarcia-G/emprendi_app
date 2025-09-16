@@ -63,13 +63,18 @@ class _ProductosScreenState extends State<ProductosScreen> {
                   );
                 }
 
-                return ListView.separated(
-                  itemCount: productos.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 6),
-                  itemBuilder: (context, index) {
-                    final producto = productos[index];
-                    return CardProducto(producto: producto);
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    await productoController.listarProductos();
                   },
+                  child: ListView.separated(
+                    itemCount: productos.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 6),
+                    itemBuilder: (context, index) {
+                      final producto = productos[index];
+                      return CardProducto(producto: producto);
+                    },
+                  ),
                 );
               }),
             ),
