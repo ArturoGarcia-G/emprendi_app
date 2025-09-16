@@ -1,6 +1,7 @@
 import 'package:uuid/uuid.dart';
 import 'package:drift/drift.dart';
 import '../database/app_database.dart';
+import 'package:emprendi_app/consts/status_consts.dart';
 import 'package:emprendi_app/models/producto.dart' as model;
 
 class ProductoLocalRepository {
@@ -56,7 +57,8 @@ class ProductoLocalRepository {
       stock: Value(p.stock ?? 0),
       precio: Value(p.precio ?? 0),
       costo: Value(p.costo ?? 0),
-      statusSincronizacion: const Value('sincronizado'),
+      status: Value(p.status ?? 'activo'),
+      statusSincronizacion: const Value(StatusConsts.sincronizado),
     );
     await db.into(db.productos).insertOnConflictUpdate(companion);
   }
@@ -65,7 +67,9 @@ class ProductoLocalRepository {
     await db
         .update(db.productos)
         .replace(
-          producto.copyWith(statusSincronizacion: Value('sincronizado')),
+          producto.copyWith(
+            statusSincronizacion: Value(StatusConsts.sincronizado),
+          ),
         );
   }
 

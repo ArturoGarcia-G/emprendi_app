@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:emprendi_app/database/app_database.dart';
 import 'package:emprendi_app/repositories/producto_local_repository.dart';
+import 'package:emprendi_app/consts/status_consts.dart';
 import '../api/producto_api.dart';
 
 class SyncService {
@@ -29,7 +30,9 @@ class SyncService {
 
   Future<void> syncProductos() async {
     final query = db.select(db.productos)
-      ..where((tbl) => tbl.statusSincronizacion.isNotIn(['sincronizado']));
+      ..where(
+        (tbl) => tbl.statusSincronizacion.isNotIn([StatusConsts.sincronizado]),
+      );
 
     final pendientes = await query.get();
 
@@ -60,7 +63,11 @@ class SyncService {
         // Si API responde bien → marcar como sincronizado
         await db
             .update(db.productos)
-            .replace(pendiente.copyWith(statusSincronizacion: 'sincronizado'));
+            .replace(
+              pendiente.copyWith(
+                statusSincronizacion: StatusConsts.sincronizado,
+              ),
+            );
       } catch (_) {
         // Falló la sincronización, se queda pendiente
       }
