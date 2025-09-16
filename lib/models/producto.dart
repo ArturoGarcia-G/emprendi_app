@@ -23,6 +23,7 @@ class Producto {
   String? actualizacionFecha;
   String? actualizacionAutorId;
   String? negocioId;
+  String? statusSincronizacion;
 
   Producto({
     this.productoId,
@@ -38,6 +39,7 @@ class Producto {
     this.actualizacionFecha,
     this.actualizacionAutorId,
     this.negocioId,
+    this.statusSincronizacion,
   });
 
   factory Producto.fromJson(Map<String, dynamic> json) =>

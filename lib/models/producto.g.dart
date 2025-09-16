@@ -20,6 +20,7 @@ Producto _$ProductoFromJson(Map<String, dynamic> json) => Producto(
   actualizacionFecha: json['actualizacion_fecha'] as String?,
   actualizacionAutorId: json['actualizacion_autor_id'] as String?,
   negocioId: json['negocio_id'] as String?,
+  statusSincronizacion: json['status_sincronizacion'] as String?,
 );
 
 Map<String, dynamic> _$ProductoToJson(Producto instance) => <String, dynamic>{
@@ -36,4 +37,5 @@ Map<String, dynamic> _$ProductoToJson(Producto instance) => <String, dynamic>{
   'actualizacion_fecha': instance.actualizacionFecha,
   'actualizacion_autor_id': instance.actualizacionAutorId,
   'negocio_id': instance.negocioId,
+  'status_sincronizacion': instance.statusSincronizacion,
 };
