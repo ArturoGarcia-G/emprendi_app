@@ -1,4 +1,5 @@
 import 'package:emprendi_app/components/boton_base.dart';
+import 'package:emprendi_app/components/card_base.dart';
 import 'package:emprendi_app/components/input_base.dart';
 import 'package:emprendi_app/components/secundary_app_bar.dart';
 import 'package:emprendi_app/controllers/producto_controller.dart';
@@ -21,8 +22,6 @@ class AgregarProductoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: SecundaryAppBar(titulo: 'Agregar producto'),
       body: Padding(
@@ -32,10 +31,9 @@ class AgregarProductoScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                _buildCard(
-                  textTheme,
-                  'Información básica',
-                  Column(
+                CardBase(
+                  titulo: 'Información básica',
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Nombre del producto'),
@@ -56,10 +54,9 @@ class AgregarProductoScreen extends StatelessWidget {
                   ),
                 ),
                 Gap(16),
-                _buildCard(
-                  textTheme,
-                  'Precios y costos',
-                  Row(
+                CardBase(
+                  titulo: 'Precios y costos',
+                  child: Row(
                     children: [
                       Expanded(
                         child: Column(
@@ -96,10 +93,9 @@ class AgregarProductoScreen extends StatelessWidget {
                   ),
                 ),
                 Gap(16),
-                _buildCard(
-                  textTheme,
-                  'Inventario',
-                  Column(
+                CardBase(
+                  titulo: 'Inventario',
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Stock inicial'),
@@ -138,6 +134,7 @@ class AgregarProductoScreen extends StatelessWidget {
                                 precio: double.tryParse(precioCtrl.text) ?? 0.0,
                                 costo: double.tryParse(costoCtrl.text) ?? 0.0,
                               );
+                              productoController.listarProductos();
                             }
                           },
                         ),
@@ -147,25 +144,6 @@ class AgregarProductoScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCard(TextTheme textTheme, String titulo, Widget child) {
-    return SizedBox(
-      width: double.infinity,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(21.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(titulo, style: textTheme.bodyMedium),
-              Gap(12),
-              child,
-            ],
           ),
         ),
       ),
