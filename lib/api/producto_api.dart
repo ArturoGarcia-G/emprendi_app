@@ -14,9 +14,11 @@ class ProductoApi {
     required int stock,
     required double precio,
     required double costo,
+    required String productoId,
   }) async {
     try {
       await _apiHandler.post('productos', '', {
+        'productoId': productoId,
         'sku': sku,
         'nombre': nombre,
         'stockInicial': stock,
