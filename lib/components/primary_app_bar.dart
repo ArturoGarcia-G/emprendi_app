@@ -29,11 +29,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
-      shape: Border(
-        bottom: BorderSide(
-          color: colorScheme.outline,
-        ),
-      ),
+      shape: Border(bottom: BorderSide(color: colorScheme.outline)),
       title: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
@@ -67,7 +63,10 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
         Stack(
           children: [
             IconButton(
-              icon: const Icon(Icons.notifications_none, color: Colors.white),
+              icon: Icon(
+                Icons.notifications_none,
+                color: colorScheme.onSurface,
+              ),
               onPressed: () {},
             ),
             if (notificaciones > 0)
