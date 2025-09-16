@@ -31,13 +31,36 @@ class ProductoApi {
   }
 
   // Listar productos
-  Future<List<Producto>> listarProductos({Map<String, dynamic>? filtros}) async {
+  Future<List<Producto>> listarProductos({
+    Map<String, dynamic>? filtros,
+  }) async {
     try {
       final response = await _apiHandler.get('productos', '', filtros ?? {});
 
       final List<dynamic> data = response['data'];
 
       return data.map((json) => Producto.fromJson(json)).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Editar un producto
+  Future<void> editarProducto({
+    required String productoId,
+    required String sku,
+    required String nombre,
+    required double precio,
+    required double costo,
+  }) async {
+    try {
+      await _apiHandler.patch('productos', productoId, {
+        'productoId': productoId,
+        'sku': sku,
+        'nombre': nombre,
+        'precio': precio,
+        'costo': costo,
+      });
     } catch (e) {
       rethrow;
     }

@@ -1,17 +1,31 @@
 import 'package:emprendi_app/components/primary_app_bar.dart';
 import 'package:emprendi_app/components/primary_drawer.dart';
 import 'package:emprendi_app/controllers/producto_controller.dart';
-import 'package:emprendi_app/models/producto.dart';
 import 'package:emprendi_app/screens/productos/widgets/card_producto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class ProductosScreen extends StatelessWidget {
+class ProductosScreen extends StatefulWidget {
+  const ProductosScreen({super.key});
+
+  @override
+  State<ProductosScreen> createState() => _ProductosScreenState();
+}
+
+class _ProductosScreenState extends State<ProductosScreen> {
   final storage = GetStorage();
+
   final productoController = Get.find<ProductoController>();
 
-  ProductosScreen({super.key});
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      productoController.listarProductos();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,29 +50,28 @@ class ProductosScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Expanded(
-              child: FutureBuilder<List<Producto>>(
-                future: productoController.listarProductos(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  final productos = snapshot.data ?? [];
+              child: Obx(() {
+                final productos = productoController.productos;
 
-                  if (productos.isEmpty) {
-                    return const Center(
-                      child: Text('No hay productos disponibles'),
-                    );
-                  }
-                  return ListView.separated(
-                    itemCount: productos.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
-                    itemBuilder: (context, index) {
-                      final producto = productos[index];
-                      return CardProducto(producto: producto);
-                    },
+                if (productoController.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (productos.isEmpty) {
+                  return const Center(
+                    child: Text('No hay productos disponibles'),
                   );
-                },
-              ),
+                }
+
+                return ListView.separated(
+                  itemCount: productos.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 6),
+                  itemBuilder: (context, index) {
+                    final producto = productos[index];
+                    return CardProducto(producto: producto);
+                  },
+                );
+              }),
             ),
           ],
         ),

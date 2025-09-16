@@ -10,6 +10,7 @@ class ProductoController extends GetxController {
 
   final ProductoApi productoApi = Get.find<ProductoApi>();
   var isLoading = false.obs;
+  var productos = <Producto>[].obs;
 
   // Método para crear un producto
   Future<void> agregarProducto({
@@ -24,7 +25,7 @@ class ProductoController extends GetxController {
 
       // Guardar offline en SQLite
       final productoLocalRepo = ProductoLocalRepository(AppDatabase());
-      final productoLocal = await productoLocalRepo.insertProducto(
+      final productoLocal = await productoLocalRepo.agregarProducto(
         sku: sku,
         nombre: nombre,
         stock: stock,
@@ -60,14 +61,13 @@ class ProductoController extends GetxController {
   }
 
   // Método para listar productos
-  Future<List<Producto>> listarProductos({
+  Future<void> listarProductos({
     Map<String, dynamic>? filtros,
   }) async {
     try {
       isLoading.value = true;
 
       final localRepo = ProductoLocalRepository(AppDatabase());
-      List<Producto> productos = [];
 
       try {
         // Intentamos traer del API y guardamos si el listado es exitoso
@@ -78,12 +78,59 @@ class ProductoController extends GetxController {
           await localRepo.upsertProducto(p);
         }
       } catch (_) {}
-      productos = await localRepo.getProductos();
-
-      return productos;
+      productos.value = await localRepo.listarProductos();
     } catch (e) {
       SnackbarHelper.show(e.toString());
       rethrow;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Método para crear un producto
+  Future<void> editarProducto({
+    required String productoId,
+    required String sku,
+    required String nombre,
+    required double precio,
+    required double costo,
+  }) async {
+    try {
+      isLoading.value = true;
+
+      // Guardar offline en SQLite
+      final productoLocalRepo = ProductoLocalRepository(AppDatabase());
+      final productoLocal = await productoLocalRepo.editarProducto(
+        uuid: productoId,
+        sku: sku,
+        nombre: nombre,
+        precio: precio,
+        costo: costo,
+      );
+
+      // Intentar mandar al servidor
+      try {
+        await productoApi.editarProducto(
+          productoId: productoLocal.uuid.value,
+          sku: sku,
+          nombre: nombre,
+          precio: precio,
+          costo: costo,
+        );
+
+        await productoLocalRepo.actualizarSincronizacion(productoLocal);
+      } catch (_) {}
+
+      SnackbarHelper.show(
+        'Producto editado correctamente',
+        type: SnackbarType.success,
+      );
+
+      listarProductos();
+
+      Get.back();
+    } catch (e) {
+      SnackbarHelper.show(e.toString());
     } finally {
       isLoading.value = false;
     }

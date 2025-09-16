@@ -7,7 +7,7 @@ class ProductoLocalRepository {
   final AppDatabase db;
   ProductoLocalRepository(this.db);
 
-  Future<ProductosCompanion> insertProducto({
+  Future<ProductosCompanion> agregarProducto({
     required String sku,
     required String nombre,
     required int stock,
@@ -30,7 +30,7 @@ class ProductoLocalRepository {
     return producto;
   }
 
-  Future<List<model.Producto>> getProductos() async {
+  Future<List<model.Producto>> listarProductos() async {
     final entities = await db.select(db.productos).get();
 
     // Mapeamos ProductoEntity a Producto
@@ -67,5 +67,34 @@ class ProductoLocalRepository {
         .replace(
           producto.copyWith(statusSincronizacion: Value('sincronizado')),
         );
+  }
+
+  Future<ProductosCompanion> editarProducto({
+    required String uuid,
+    String? sku,
+    String? nombre,
+    double? precio,
+    double? costo,
+  }) async {
+    // Obtener el producto existente
+    final productoExistente = await (db.select(
+      db.productos,
+    )..where((t) => t.uuid.equals(uuid))).getSingle();
+
+    // Crear un companion con los cambios
+    final productoActualizado = ProductosCompanion(
+      uuid: Value(uuid), // primary key
+      sku: sku != null ? Value(sku) : Value(productoExistente.sku),
+      nombre: nombre != null ? Value(nombre) : Value(productoExistente.nombre),
+      precio: precio != null ? Value(precio) : Value(productoExistente.precio),
+      costo: costo != null ? Value(costo) : Value(productoExistente.costo),
+      stock: Value(productoExistente.stock),
+      statusSincronizacion: const Value('actualizacion_pendiente'),
+    );
+
+    // Actualizar la fila en SQLite
+    await db.update(db.productos).replace(productoActualizado);
+
+    return productoActualizado;
   }
 }

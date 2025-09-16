@@ -1,7 +1,9 @@
 import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:emprendi_app/models/producto.dart';
+import 'package:emprendi_app/routes/pages_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class CardProducto extends StatelessWidget {
   final Producto producto;
@@ -70,10 +72,16 @@ class CardProducto extends StatelessWidget {
                   Container(),
                   Row(
                     children: [
-                      Icon(
-                        Icons.edit_outlined,
-                        color: colorScheme.onSurface,
-                        size: 20,
+                      GestureDetector(
+                        child: Icon(
+                          Icons.edit_outlined,
+                          color: colorScheme.onSurface,
+                          size: 20,
+                        ),
+                        onTap: () => Get.toNamed(
+                          PagesRoutes.editarProductoScreen,
+                          arguments: producto,
+                        ),
                       ),
                       Gap(10),
                       Icon(Icons.delete_outline, color: colorRojo800, size: 20),
