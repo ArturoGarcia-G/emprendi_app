@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 const colorBackground = Color.fromRGBO(255, 255, 255, 1.0);
 const colorBarrierBackground = Color.fromARGB(190, 0, 0, 0);
 
-
 const colorPrimario500 = Color.fromRGBO(6, 104, 208, 1.0);
 const colorPrimario600 = Color.fromRGBO(5, 86, 173, 1.0);
 const colorPrimario700 = Color.fromRGBO(4, 71, 144, 1.0);
@@ -33,7 +32,8 @@ const colorAzul50 = Color.fromRGBO(227, 242, 253, 1.0);
 
 const colorNegro = Color.fromRGBO(0, 0, 0, 1.0);
 
-const colorNaranja900 = Color.fromRGBO(230, 81, 0, 1.0);
+const colorNaranja600 = Color.fromRGBO(245, 74, 0, 1.0);
+const colorNaranja900 = Color.fromRGBO(126, 42, 12, 1.0);
 
 const colorRojo50 = Color.fromRGBO(255, 235, 238, 1.0);
 const colorRojo500 = Color.fromRGBO(244, 67, 54, 1.0);
@@ -41,6 +41,7 @@ const colorRojo600 = Color.fromRGBO(229, 57, 53, 1.0);
 const colorRojo700 = Color.fromRGBO(211, 47, 47, 1.0);
 const colorRojo800 = Color.fromRGBO(198, 40, 40, 1.0);
 
+const colorVerde950 = Color.fromRGBO(3, 45, 21, 1);
 const colorVerde900 = Color.fromRGBO(12, 90, 9, 1);
 const colorVerde700 = Color.fromRGBO(32, 122, 29, 1.0);
 const colorVerde500 = Color.fromRGBO(76, 175, 80, 1.0);
@@ -56,6 +57,11 @@ const colorCian200 = Color.fromRGBO(128, 222, 234, 1.0);
 const colorAzulClaro = Color.fromRGBO(228, 235, 246, 1.0);
 const colorArena = Color.fromRGBO(240, 235, 192, 1.0);
 
+//Colores menu configuracion
+const colorTeal600 = Color.fromRGBO(0, 166, 62, 1.0);
+const colorTeal900 = Color.fromRGBO(11, 76, 73, 1.0);
+
+const colorAquamarina = Color.fromRGBO(77, 182, 172, 1.0);
 
 //Colores del tema
 const colorBlanco = Color.fromRGBO(255, 255, 255, 1.0);
@@ -74,9 +80,3 @@ const colorBackgroundOscuro = Color.fromRGBO(13, 16, 23, 1.0);
 const colorCardOscuro = Color.fromRGBO(22, 27, 33, 1.0);
 const gris = Color.fromRGBO(139, 148, 158, 1.0);
 const colorBordeOscuro = Color.fromRGBO(48, 54, 61, 1.0);
-
-
-
-
-
-
