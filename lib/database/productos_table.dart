@@ -10,6 +10,10 @@ class Productos extends Table {
   RealColumn get costo => real()();
   TextColumn get status =>
       text().withDefault(const Constant('activo'))();
+   DateTimeColumn get registroFecha => dateTime()
+      .withDefault(currentDateAndTime)();
+  DateTimeColumn get actualizacionFecha => dateTime()
+      .nullable()();
 
   // Para manejar sincronización
   TextColumn get statusSincronizacion =>

@@ -18,9 +18,9 @@ class Producto {
   double? costo;
 
   String? status;
-  String? registroFecha;
+  DateTime? registroFecha;
   String? registroAutorId;
-  String? actualizacionFecha;
+  DateTime? actualizacionFecha;
   String? actualizacionAutorId;
   String? negocioId;
   String? statusSincronizacion;

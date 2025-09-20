@@ -46,6 +46,8 @@ class ProductoLocalRepository {
             precio: entity.precio,
             costo: entity.costo,
             status: entity.status,
+            registroFecha: entity.registroFecha,
+            actualizacionFecha: entity.actualizacionFecha,
             statusSincronizacion: entity.statusSincronizacion,
           ),
         )
@@ -61,6 +63,8 @@ class ProductoLocalRepository {
       precio: Value(p.precio ?? 0),
       costo: Value(p.costo ?? 0),
       status: Value(p.status ?? 'activo'),
+      registroFecha: Value(p.registroFecha ?? DateTime.now()),
+      actualizacionFecha: Value(p.registroFecha),
       statusSincronizacion: const Value(StatusConsts.sincronizado),
     );
     await db.into(db.productos).insertOnConflictUpdate(companion);

@@ -73,6 +73,30 @@ class $ProductosTable extends Productos
     requiredDuringInsert: false,
     defaultValue: const Constant('activo'),
   );
+  static const VerificationMeta _registroFechaMeta = const VerificationMeta(
+    'registroFecha',
+  );
+  @override
+  late final GeneratedColumn<DateTime> registroFecha =
+      GeneratedColumn<DateTime>(
+        'registro_fecha',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+        defaultValue: currentDateAndTime,
+      );
+  static const VerificationMeta _actualizacionFechaMeta =
+      const VerificationMeta('actualizacionFecha');
+  @override
+  late final GeneratedColumn<DateTime> actualizacionFecha =
+      GeneratedColumn<DateTime>(
+        'actualizacion_fecha',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _statusSincronizacionMeta =
       const VerificationMeta('statusSincronizacion');
   @override
@@ -94,6 +118,8 @@ class $ProductosTable extends Productos
     precio,
     costo,
     status,
+    registroFecha,
+    actualizacionFecha,
     statusSincronizacion,
   ];
   @override
@@ -162,6 +188,24 @@ class $ProductosTable extends Productos
         status.isAcceptableOrUnknown(data['status']!, _statusMeta),
       );
     }
+    if (data.containsKey('registro_fecha')) {
+      context.handle(
+        _registroFechaMeta,
+        registroFecha.isAcceptableOrUnknown(
+          data['registro_fecha']!,
+          _registroFechaMeta,
+        ),
+      );
+    }
+    if (data.containsKey('actualizacion_fecha')) {
+      context.handle(
+        _actualizacionFechaMeta,
+        actualizacionFecha.isAcceptableOrUnknown(
+          data['actualizacion_fecha']!,
+          _actualizacionFechaMeta,
+        ),
+      );
+    }
     if (data.containsKey('status_sincronizacion')) {
       context.handle(
         _statusSincronizacionMeta,
@@ -208,6 +252,14 @@ class $ProductosTable extends Productos
         DriftSqlType.string,
         data['${effectivePrefix}status'],
       )!,
+      registroFecha: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}registro_fecha'],
+      )!,
+      actualizacionFecha: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}actualizacion_fecha'],
+      ),
       statusSincronizacion: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}status_sincronizacion'],
@@ -229,6 +281,8 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
   final double precio;
   final double costo;
   final String status;
+  final DateTime registroFecha;
+  final DateTime? actualizacionFecha;
   final String statusSincronizacion;
   const ProductoEntity({
     required this.uuid,
@@ -238,6 +292,8 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
     required this.precio,
     required this.costo,
     required this.status,
+    required this.registroFecha,
+    this.actualizacionFecha,
     required this.statusSincronizacion,
   });
   @override
@@ -250,6 +306,10 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
     map['precio'] = Variable<double>(precio);
     map['costo'] = Variable<double>(costo);
     map['status'] = Variable<String>(status);
+    map['registro_fecha'] = Variable<DateTime>(registroFecha);
+    if (!nullToAbsent || actualizacionFecha != null) {
+      map['actualizacion_fecha'] = Variable<DateTime>(actualizacionFecha);
+    }
     map['status_sincronizacion'] = Variable<String>(statusSincronizacion);
     return map;
   }
@@ -263,6 +323,10 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
       precio: Value(precio),
       costo: Value(costo),
       status: Value(status),
+      registroFecha: Value(registroFecha),
+      actualizacionFecha: actualizacionFecha == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actualizacionFecha),
       statusSincronizacion: Value(statusSincronizacion),
     );
   }
@@ -280,6 +344,10 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
       precio: serializer.fromJson<double>(json['precio']),
       costo: serializer.fromJson<double>(json['costo']),
       status: serializer.fromJson<String>(json['status']),
+      registroFecha: serializer.fromJson<DateTime>(json['registroFecha']),
+      actualizacionFecha: serializer.fromJson<DateTime?>(
+        json['actualizacionFecha'],
+      ),
       statusSincronizacion: serializer.fromJson<String>(
         json['statusSincronizacion'],
       ),
@@ -296,6 +364,8 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
       'precio': serializer.toJson<double>(precio),
       'costo': serializer.toJson<double>(costo),
       'status': serializer.toJson<String>(status),
+      'registroFecha': serializer.toJson<DateTime>(registroFecha),
+      'actualizacionFecha': serializer.toJson<DateTime?>(actualizacionFecha),
       'statusSincronizacion': serializer.toJson<String>(statusSincronizacion),
     };
   }
@@ -308,6 +378,8 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
     double? precio,
     double? costo,
     String? status,
+    DateTime? registroFecha,
+    Value<DateTime?> actualizacionFecha = const Value.absent(),
     String? statusSincronizacion,
   }) => ProductoEntity(
     uuid: uuid ?? this.uuid,
@@ -317,6 +389,10 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
     precio: precio ?? this.precio,
     costo: costo ?? this.costo,
     status: status ?? this.status,
+    registroFecha: registroFecha ?? this.registroFecha,
+    actualizacionFecha: actualizacionFecha.present
+        ? actualizacionFecha.value
+        : this.actualizacionFecha,
     statusSincronizacion: statusSincronizacion ?? this.statusSincronizacion,
   );
   ProductoEntity copyWithCompanion(ProductosCompanion data) {
@@ -328,6 +404,12 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
       precio: data.precio.present ? data.precio.value : this.precio,
       costo: data.costo.present ? data.costo.value : this.costo,
       status: data.status.present ? data.status.value : this.status,
+      registroFecha: data.registroFecha.present
+          ? data.registroFecha.value
+          : this.registroFecha,
+      actualizacionFecha: data.actualizacionFecha.present
+          ? data.actualizacionFecha.value
+          : this.actualizacionFecha,
       statusSincronizacion: data.statusSincronizacion.present
           ? data.statusSincronizacion.value
           : this.statusSincronizacion,
@@ -344,6 +426,8 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
           ..write('precio: $precio, ')
           ..write('costo: $costo, ')
           ..write('status: $status, ')
+          ..write('registroFecha: $registroFecha, ')
+          ..write('actualizacionFecha: $actualizacionFecha, ')
           ..write('statusSincronizacion: $statusSincronizacion')
           ..write(')'))
         .toString();
@@ -358,6 +442,8 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
     precio,
     costo,
     status,
+    registroFecha,
+    actualizacionFecha,
     statusSincronizacion,
   );
   @override
@@ -371,6 +457,8 @@ class ProductoEntity extends DataClass implements Insertable<ProductoEntity> {
           other.precio == this.precio &&
           other.costo == this.costo &&
           other.status == this.status &&
+          other.registroFecha == this.registroFecha &&
+          other.actualizacionFecha == this.actualizacionFecha &&
           other.statusSincronizacion == this.statusSincronizacion);
 }
 
@@ -382,6 +470,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
   final Value<double> precio;
   final Value<double> costo;
   final Value<String> status;
+  final Value<DateTime> registroFecha;
+  final Value<DateTime?> actualizacionFecha;
   final Value<String> statusSincronizacion;
   final Value<int> rowid;
   const ProductosCompanion({
@@ -392,6 +482,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
     this.precio = const Value.absent(),
     this.costo = const Value.absent(),
     this.status = const Value.absent(),
+    this.registroFecha = const Value.absent(),
+    this.actualizacionFecha = const Value.absent(),
     this.statusSincronizacion = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -403,6 +495,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
     required double precio,
     required double costo,
     this.status = const Value.absent(),
+    this.registroFecha = const Value.absent(),
+    this.actualizacionFecha = const Value.absent(),
     this.statusSincronizacion = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : uuid = Value(uuid),
@@ -419,6 +513,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
     Expression<double>? precio,
     Expression<double>? costo,
     Expression<String>? status,
+    Expression<DateTime>? registroFecha,
+    Expression<DateTime>? actualizacionFecha,
     Expression<String>? statusSincronizacion,
     Expression<int>? rowid,
   }) {
@@ -430,6 +526,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
       if (precio != null) 'precio': precio,
       if (costo != null) 'costo': costo,
       if (status != null) 'status': status,
+      if (registroFecha != null) 'registro_fecha': registroFecha,
+      if (actualizacionFecha != null) 'actualizacion_fecha': actualizacionFecha,
       if (statusSincronizacion != null)
         'status_sincronizacion': statusSincronizacion,
       if (rowid != null) 'rowid': rowid,
@@ -444,6 +542,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
     Value<double>? precio,
     Value<double>? costo,
     Value<String>? status,
+    Value<DateTime>? registroFecha,
+    Value<DateTime?>? actualizacionFecha,
     Value<String>? statusSincronizacion,
     Value<int>? rowid,
   }) {
@@ -455,6 +555,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
       precio: precio ?? this.precio,
       costo: costo ?? this.costo,
       status: status ?? this.status,
+      registroFecha: registroFecha ?? this.registroFecha,
+      actualizacionFecha: actualizacionFecha ?? this.actualizacionFecha,
       statusSincronizacion: statusSincronizacion ?? this.statusSincronizacion,
       rowid: rowid ?? this.rowid,
     );
@@ -484,6 +586,12 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
     if (status.present) {
       map['status'] = Variable<String>(status.value);
     }
+    if (registroFecha.present) {
+      map['registro_fecha'] = Variable<DateTime>(registroFecha.value);
+    }
+    if (actualizacionFecha.present) {
+      map['actualizacion_fecha'] = Variable<DateTime>(actualizacionFecha.value);
+    }
     if (statusSincronizacion.present) {
       map['status_sincronizacion'] = Variable<String>(
         statusSincronizacion.value,
@@ -505,6 +613,8 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
           ..write('precio: $precio, ')
           ..write('costo: $costo, ')
           ..write('status: $status, ')
+          ..write('registroFecha: $registroFecha, ')
+          ..write('actualizacionFecha: $actualizacionFecha, ')
           ..write('statusSincronizacion: $statusSincronizacion, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -532,6 +642,8 @@ typedef $$ProductosTableCreateCompanionBuilder =
       required double precio,
       required double costo,
       Value<String> status,
+      Value<DateTime> registroFecha,
+      Value<DateTime?> actualizacionFecha,
       Value<String> statusSincronizacion,
       Value<int> rowid,
     });
@@ -544,6 +656,8 @@ typedef $$ProductosTableUpdateCompanionBuilder =
       Value<double> precio,
       Value<double> costo,
       Value<String> status,
+      Value<DateTime> registroFecha,
+      Value<DateTime?> actualizacionFecha,
       Value<String> statusSincronizacion,
       Value<int> rowid,
     });
@@ -589,6 +703,16 @@ class $$ProductosTableFilterComposer
 
   ColumnFilters<String> get status => $composableBuilder(
     column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get actualizacionFecha => $composableBuilder(
+    column: $table.actualizacionFecha,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -642,6 +766,16 @@ class $$ProductosTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get actualizacionFecha => $composableBuilder(
+    column: $table.actualizacionFecha,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get statusSincronizacion => $composableBuilder(
     column: $table.statusSincronizacion,
     builder: (column) => ColumnOrderings(column),
@@ -677,6 +811,16 @@ class $$ProductosTableAnnotationComposer
 
   GeneratedColumn<String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get actualizacionFecha => $composableBuilder(
+    column: $table.actualizacionFecha,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get statusSincronizacion => $composableBuilder(
     column: $table.statusSincronizacion,
@@ -722,6 +866,8 @@ class $$ProductosTableTableManager
                 Value<double> precio = const Value.absent(),
                 Value<double> costo = const Value.absent(),
                 Value<String> status = const Value.absent(),
+                Value<DateTime> registroFecha = const Value.absent(),
+                Value<DateTime?> actualizacionFecha = const Value.absent(),
                 Value<String> statusSincronizacion = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProductosCompanion(
@@ -732,6 +878,8 @@ class $$ProductosTableTableManager
                 precio: precio,
                 costo: costo,
                 status: status,
+                registroFecha: registroFecha,
+                actualizacionFecha: actualizacionFecha,
                 statusSincronizacion: statusSincronizacion,
                 rowid: rowid,
               ),
@@ -744,6 +892,8 @@ class $$ProductosTableTableManager
                 required double precio,
                 required double costo,
                 Value<String> status = const Value.absent(),
+                Value<DateTime> registroFecha = const Value.absent(),
+                Value<DateTime?> actualizacionFecha = const Value.absent(),
                 Value<String> statusSincronizacion = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProductosCompanion.insert(
@@ -754,6 +904,8 @@ class $$ProductosTableTableManager
                 precio: precio,
                 costo: costo,
                 status: status,
+                registroFecha: registroFecha,
+                actualizacionFecha: actualizacionFecha,
                 statusSincronizacion: statusSincronizacion,
                 rowid: rowid,
               ),
