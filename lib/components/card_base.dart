@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class CardBase extends StatelessWidget {
-  final String titulo;
+  final String? titulo;
   final Widget child;
+  final IconData? icono;
 
-  const CardBase({super.key, required this.child, required this.titulo});
+  const CardBase({super.key, required this.child, this.titulo, this.icono});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,17 @@ class CardBase extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(titulo, style: textTheme.bodyMedium),
-              Gap(12),
+              // Solo mostrar fila si hay titulo o icono
+              if (titulo != null || icono != null)
+                Row(
+                  children: [
+                    if (icono != null) ...[Icon(icono, size: 20), const Gap(8)],
+                    if (titulo != null)
+                      Text(titulo!, style: textTheme.bodyMedium),
+                  ],
+                ),
+              // Solo agregar separación si hay titulo o icono
+              if (titulo != null || icono != null) const Gap(12),
               child,
             ],
           ),
