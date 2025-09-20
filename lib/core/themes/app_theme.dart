@@ -75,6 +75,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(14),
         side: BorderSide(color: colorBordeClaro),
       ),
+      margin: EdgeInsets.zero,
     ),
 
     // Iconos
@@ -162,6 +163,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(14),
         side: BorderSide(color: colorBordeOscuro),
       ),
+      margin: EdgeInsets.zero,
     ),
 
     // Iconos

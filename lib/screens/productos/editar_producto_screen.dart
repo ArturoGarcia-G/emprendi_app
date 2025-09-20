@@ -3,27 +3,56 @@ import 'package:emprendi_app/components/card_base.dart';
 import 'package:emprendi_app/components/input_base.dart';
 import 'package:emprendi_app/components/secundary_app_bar.dart';
 import 'package:emprendi_app/controllers/producto_controller.dart';
+import 'package:emprendi_app/models/producto.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class AgregarProductoScreen extends StatelessWidget {
-  AgregarProductoScreen({super.key});
+class EditarProductoScreen extends StatefulWidget {
+  final Producto productoEditar;
+  const EditarProductoScreen({super.key, required this.productoEditar});
 
+  @override
+  State<EditarProductoScreen> createState() => _EditarProductoScreenState();
+}
+
+class _EditarProductoScreenState extends State<EditarProductoScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final nombreCtrl = TextEditingController();
-  final skuCtrl = TextEditingController();
-  final precioCtrl = TextEditingController();
-  final costoCtrl = TextEditingController();
-  final stockCtrl = TextEditingController();
+  late final TextEditingController nombreCtrl;
+  late final TextEditingController skuCtrl;
+  late final TextEditingController precioCtrl;
+  late final TextEditingController costoCtrl;
 
   final productoController = Get.find<ProductoController>();
 
   @override
+  void initState() {
+    super.initState();
+    // Inicializamos los controllers con los valores actuales del producto
+    nombreCtrl = TextEditingController(text: widget.productoEditar.nombre);
+    skuCtrl = TextEditingController(text: widget.productoEditar.sku);
+    precioCtrl = TextEditingController(
+      text: widget.productoEditar.precio?.toString() ?? '0',
+    );
+    costoCtrl = TextEditingController(
+      text: widget.productoEditar.costo?.toString() ?? '0',
+    );
+  }
+
+  @override
+  void dispose() {
+    nombreCtrl.dispose();
+    skuCtrl.dispose();
+    precioCtrl.dispose();
+    costoCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SecundaryAppBar(titulo: 'Agregar producto'),
+      appBar: SecundaryAppBar(titulo: 'Editar producto'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -92,23 +121,6 @@ class AgregarProductoScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Gap(16),
-                CardBase(
-                  titulo: 'Inventario',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Stock inicial'),
-                      Gap(4),
-                      InputBase(
-                        controller: stockCtrl,
-                        placeholder: '0',
-                        keyboardType: TextInputType.number,
-                        requerido: true,
-                      ),
-                    ],
-                  ),
-                ),
                 Gap(24),
                 Row(
                   children: [
@@ -123,18 +135,17 @@ class AgregarProductoScreen extends StatelessWidget {
                     Expanded(
                       child: Obx(
                         () => BotonBase(
-                          label: 'Guardar producto',
+                          label: 'Guardar cambios',
                           isLoading: productoController.isLoading.value,
                           fn: () {
                             if (_formKey.currentState?.validate() ?? false) {
-                              productoController.agregarProducto(
+                              productoController.editarProducto(
+                                productoId: widget.productoEditar.productoId!,
                                 sku: skuCtrl.text,
                                 nombre: nombreCtrl.text,
-                                stock: int.tryParse(stockCtrl.text) ?? 0,
                                 precio: double.tryParse(precioCtrl.text) ?? 0.0,
                                 costo: double.tryParse(costoCtrl.text) ?? 0.0,
                               );
-                              productoController.listarProductos();
                             }
                           },
                         ),

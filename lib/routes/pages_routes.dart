@@ -17,4 +17,6 @@ class PagesRoutes {
 
   //Productos
   static const agregarProductoScreen = '/agregar-producto';
+  static const editarProductoScreen = '/editar-producto';
+  static const productoDetalleScreen = '/detalle-producto';
 }
