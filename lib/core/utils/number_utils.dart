@@ -16,11 +16,15 @@ class NumberUtils {
   }
 
   // Si necesitas mostrar sin símbolo
-  static String formatNumber(double value, {String locale = 'es_MX'}) {
+  static String formatNumber(
+    num value, {
+    String locale = 'es_MX',
+    int decimales = 2,
+  }) {
     final formatter = NumberFormat.currency(
       locale: locale,
       symbol: '',
-      decimalDigits: 2,
+      decimalDigits: decimales,
     );
     return formatter.format(value).trim();
   }

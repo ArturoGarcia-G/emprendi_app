@@ -25,41 +25,53 @@ class CardProducto extends StatelessWidget {
           padding: const EdgeInsets.all(18.0),
           child: Row(
             children: [
-              Container(
-                padding: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: colorScheme.secondary,
+              GestureDetector(
+                child: Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: colorScheme.secondary,
+                  ),
+                  child: Text('A1'),
                 ),
-                child: Text('A1'),
+                onTap: () => Get.toNamed(
+                  PagesRoutes.productoDetalleScreen,
+                  arguments: producto,
+                ),
               ),
               Gap(12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          producto.nombre ?? '',
-                          style: textTheme.bodyMedium!.copyWith(
-                            color: colorScheme.onSurface,
+                    GestureDetector(
+                      onTap: () => Get.toNamed(
+                        PagesRoutes.productoDetalleScreen,
+                        arguments: producto,
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            producto.nombre ?? '',
+                            style: textTheme.bodyMedium!.copyWith(
+                              color: colorScheme.onSurface,
+                            ),
                           ),
-                        ),
-                        Gap(4),
-                        producto.statusSincronizacion ==
-                                StatusConsts.sincronizado
-                            ? Icon(
-                                Icons.cloud_done_outlined,
-                                color: colorVerde500,
-                                size: 14,
-                              )
-                            : Icon(
-                                Icons.cloud_sync_outlined,
-                                color: colorGris600,
-                                size: 14,
-                              ),
-                      ],
+                          Gap(4),
+                          producto.statusSincronizacion ==
+                                  StatusConsts.sincronizado
+                              ? Icon(
+                                  Icons.cloud_done_outlined,
+                                  color: colorVerde500,
+                                  size: 14,
+                                )
+                              : Icon(
+                                  Icons.cloud_sync_outlined,
+                                  color: colorGris600,
+                                  size: 14,
+                                ),
+                        ],
+                      ),
                     ),
                     Gap(2),
                     Text(
