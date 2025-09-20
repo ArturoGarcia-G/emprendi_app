@@ -6,18 +6,24 @@ part 'producto.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Producto {
   String? productoId;
-  String? folio;
+  int? folio;
   String? sku;
   String? nombre;
   int? stock;
+
+  @StringToDoubleConverter()
   double? precio;
+
+  @StringToDoubleConverter()
   double? costo;
+
   String? status;
-  String? registroFecha;
+  DateTime? registroFecha;
   String? registroAutorId;
-  String? actualizacionFecha;
+  DateTime? actualizacionFecha;
   String? actualizacionAutorId;
   String? negocioId;
+  String? statusSincronizacion;
 
   Producto({
     this.productoId,
@@ -33,11 +39,26 @@ class Producto {
     this.actualizacionFecha,
     this.actualizacionAutorId,
     this.negocioId,
+    this.statusSincronizacion,
   });
 
-  /// Generado automáticamente con json_serializable
   factory Producto.fromJson(Map<String, dynamic> json) =>
       _$ProductoFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductoToJson(this);
+}
+
+class StringToDoubleConverter implements JsonConverter<double?, dynamic> {
+  const StringToDoubleConverter();
+
+  @override
+  double? fromJson(dynamic json) {
+    if (json == null) return null;
+    if (json is num) return json.toDouble();
+    if (json is String) return double.tryParse(json);
+    return null;
+  }
+
+  @override
+  dynamic toJson(double? object) => object;
 }

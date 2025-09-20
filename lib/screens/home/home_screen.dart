@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
       drawer: PrimaryDrawer(),
       appBar: PrimaryAppBar(avatarUrl: ''),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(12.0),
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height,
@@ -64,10 +64,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Gap(21),
                 Column(
-                  spacing: 8,
+                  spacing: 12,
                   children: [
                     Row(
-                      spacing: 8,
+                      spacing: 12,
                       children: [
                         Expanded(
                           child: CardMetrica(
@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     Row(
-                      spacing: 8,
+                      spacing: 12,
                       children: [
                         Expanded(
                           child: CardMetrica(
