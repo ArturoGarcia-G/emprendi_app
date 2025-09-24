@@ -1,5 +1,7 @@
+import 'package:emprendi_app/components/modales/modal_eliminar.dart';
 import 'package:emprendi_app/components/status_global.dart';
 import 'package:emprendi_app/consts/status_consts.dart';
+import 'package:emprendi_app/controllers/producto_controller.dart';
 import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:emprendi_app/core/utils/number_utils.dart';
 import 'package:emprendi_app/models/producto.dart';
@@ -17,6 +19,7 @@ class CardProducto extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final productoController = Get.find<ProductoController>();
 
     return SizedBox(
       width: double.infinity,
@@ -27,19 +30,19 @@ class CardProducto extends StatelessWidget {
             children: [
               GestureDetector(
                 child: Container(
-                  padding: EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: colorScheme.secondary,
                   ),
-                  child: Text('A1'),
+                  child: const Text('A1'),
                 ),
                 onTap: () => Get.toNamed(
                   PagesRoutes.productoDetalleScreen,
                   arguments: producto,
                 ),
               ),
-              Gap(12),
+              const Gap(12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,15 +60,15 @@ class CardProducto extends StatelessWidget {
                               color: colorScheme.onSurface,
                             ),
                           ),
-                          Gap(4),
+                          const Gap(4),
                           producto.statusSincronizacion ==
                                   StatusConsts.sincronizado
-                              ? Icon(
+                              ? const Icon(
                                   Icons.cloud_done_outlined,
                                   color: colorVerde500,
                                   size: 14,
                                 )
-                              : Icon(
+                              : const Icon(
                                   Icons.cloud_sync_outlined,
                                   color: colorGris600,
                                   size: 14,
@@ -73,12 +76,12 @@ class CardProducto extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Gap(2),
+                    const Gap(2),
                     Text(
                       'SKU: ${producto.sku}',
                       style: textTheme.bodySmall!.copyWith(color: colorGris),
                     ),
-                    Gap(8),
+                    const Gap(8),
                     Row(
                       children: [
                         Text(
@@ -87,7 +90,7 @@ class CardProducto extends StatelessWidget {
                             color: colorScheme.primary,
                           ),
                         ),
-                        Gap(8),
+                        const Gap(8),
                         Text(
                           'Stock: ${producto.stock}',
                           style: textTheme.bodySmall!.copyWith(
@@ -102,7 +105,7 @@ class CardProducto extends StatelessWidget {
               Column(
                 children: [
                   StatusGlobal(status: producto.status ?? ''),
-                  Gap(16),
+                  const Gap(16),
                   Row(
                     children: [
                       GestureDetector(
@@ -116,8 +119,38 @@ class CardProducto extends StatelessWidget {
                           arguments: producto,
                         ),
                       ),
-                      Gap(10),
-                      Icon(Icons.delete_outline, color: colorRojo800, size: 20),
+                      const Gap(10),
+                      GestureDetector(
+                        child: const Icon(
+                          Icons.delete_outline,
+                          color: colorRojo900,
+                          size: 20,
+                        ),
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            useRootNavigator: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16),
+                              ),
+                            ),
+                            builder: (context) {
+                              return ModalEliminar(
+                                tipoRegistro: 'producto',
+                                nombreRegistro: producto.nombre ?? '',
+                                textoAdvertencia:
+                                    'Se eliminara el producto y no podrás volverlo a usar en ningun proceso del sistema',
+                                onEliminar: () async {
+                                  await productoController.eliminarProducto(
+                                    productoId: producto.productoId!,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],

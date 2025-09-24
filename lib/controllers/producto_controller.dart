@@ -61,9 +61,7 @@ class ProductoController extends GetxController {
   }
 
   // Método para listar productos
-  Future<void> listarProductos({
-    Map<String, dynamic>? filtros,
-  }) async {
+  Future<void> listarProductos({Map<String, dynamic>? filtros}) async {
     try {
       isLoading.value = true;
 
@@ -87,7 +85,7 @@ class ProductoController extends GetxController {
     }
   }
 
-  // Método para crear un producto
+  // Método para editar un producto
   Future<void> editarProducto({
     required String productoId,
     required String sku,
@@ -133,6 +131,25 @@ class ProductoController extends GetxController {
       SnackbarHelper.show(e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  // Método para eliminar un producto
+  Future<void> eliminarProducto({required String productoId}) async {
+    try {
+      // Intentar mandar al servidor
+      await productoApi.eliminarProducto(productoId: productoId);
+
+      SnackbarHelper.show(
+        'Producto eliminado correctamente',
+        type: SnackbarType.success,
+      );
+
+      listarProductos();
+
+      Get.back();
+    } catch (e) {
+      SnackbarHelper.show(e.toString());
     }
   }
 }
