@@ -129,6 +129,38 @@ class ApiHandler {
     }
   }
 
+  Future<Map<String, dynamic>> delete(
+    String modulo,
+    String endpoint,
+    Map<String, dynamic> filtros, {
+    bool isUpload = false,
+  }) async {
+    try {
+      String urlModulo = endpoint.isEmpty ? modulo : '$modulo/$endpoint';
+      final data = isUpload ? dio.FormData.fromMap(filtros) : filtros;
+      final response = await _dio.delete('/$urlModulo', data: data);
+      return _parseResponse(response);
+    } on dio.DioException catch (dioError) {
+      // Manejo de errores específicos de Dio
+      int statusCode = dioError.response?.statusCode ?? 0;
+
+      if (dioError.response != null) {
+        LoggerHelper.error('Respuesta del servidor con error:');
+        LoggerHelper.error(
+          'Código de estado: ${dioError.response?.statusCode}',
+        );
+        LoggerHelper.error('Mensaje: ${dioError.response?.statusMessage}');
+      } else {
+        LoggerHelper.error('Error de red: ${dioError.message}');
+        statusCode = 551;
+      }
+
+      throw Exception(_obtenerMensajeError(statusCode.toString()));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Parseo de la respuesta cruda y manejo de errores
   Map<String, dynamic> _parseResponse(dio.Response response) {
     final extractedData = response.data;
