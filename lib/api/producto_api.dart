@@ -65,4 +65,13 @@ class ProductoApi {
       rethrow;
     }
   }
+
+  // Editar un producto
+  Future<void> eliminarProducto({required String productoId}) async {
+    try {
+      await _apiHandler.delete('productos', productoId, {});
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
