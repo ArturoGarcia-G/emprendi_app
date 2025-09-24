@@ -1,3 +1,4 @@
+import 'package:emprendi_app/screens/configuracion/configuracion_screen.dart';
 import 'package:emprendi_app/screens/home/home_screen.dart';
 import 'package:emprendi_app/screens/inventario/inventario_screen.dart';
 import 'package:emprendi_app/screens/productos/productos_screen.dart';
@@ -16,7 +17,7 @@ class Layout extends StatelessWidget {
       VentasScreen(),
       InventarioScreen(),
       ProductosScreen(),
-      ProductosScreen(),
+      ConfiguracionScreen(),
     ];
   }
 
