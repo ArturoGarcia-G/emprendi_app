@@ -16,7 +16,18 @@ class SnackbarHelper {
       case SnackbarType.success:
         showTopSnackBar(
           overlay,
-          CustomSnackBar.success(message: cleanedMessage),
+          SizedBox(
+            height: 60,
+            child: CustomSnackBar.success(
+              message: cleanedMessage,
+              backgroundColor: colorVerde700,
+              icon: const Icon(
+                Icons.check_circle_outline_rounded,
+                color: colorVerde900,
+                size: 75,
+              ),
+            ),
+          ),
         );
         break;
       case SnackbarType.error:
