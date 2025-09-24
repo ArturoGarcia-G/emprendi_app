@@ -1,6 +1,7 @@
+import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:flutter/material.dart';
 
-enum BotonTipo { primario, secundario, outline }
+enum BotonTipo { primario, secundario, outline, eliminar }
 
 class BotonBase extends StatelessWidget {
   final String label;
@@ -42,6 +43,12 @@ class BotonBase extends StatelessWidget {
           foregroundColor: colorScheme.primary,
           side: BorderSide(color: colorScheme.primary),
           elevation: 0,
+        );
+        break;
+      case BotonTipo.eliminar:
+        style = ElevatedButton.styleFrom(
+          backgroundColor: colorRojo900,
+          foregroundColor: colorBlanco,
         );
         break;
     }
