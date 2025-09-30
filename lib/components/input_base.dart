@@ -1,3 +1,4 @@
+import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:flutter/material.dart';
 
 class InputBase extends StatelessWidget {
@@ -23,8 +24,14 @@ class InputBase extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: placeholder,
-        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 12,
+        ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        hintStyle: Theme.of(
+          context,
+        ).textTheme.bodyMedium!.copyWith(color: colorGris),
       ),
       validator: (value) {
         if (requerido && (value == null || value.isEmpty)) {
