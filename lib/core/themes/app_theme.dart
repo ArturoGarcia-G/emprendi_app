@@ -10,8 +10,8 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.light,
 
-    colorScheme: ColorScheme.light(
-      primary: colorPrimario,
+    colorScheme: const ColorScheme.light(
+      primary: Color.fromRGBO(0, 121, 107, 1),
       onPrimary: colorBlanco,
       secondary: colorSecundario,
       onSecondary: colorBlanco,
@@ -21,6 +21,8 @@ class AppTheme {
       onError: colorBlanco,
       outline: colorBordeClaro,
     ),
+
+    dividerTheme: const DividerThemeData(color: gris, thickness: 1, space: 32),
 
     // Fondo general
     scaffoldBackgroundColor: colorBackgroundClaro,
@@ -52,7 +54,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: colorPrimario,
         foregroundColor: colorBlanco,
-        padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
@@ -73,7 +75,7 @@ class AppTheme {
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: colorBordeClaro),
+        side: const BorderSide(color: colorBordeClaro),
       ),
       margin: EdgeInsets.zero,
     ),
@@ -99,7 +101,7 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
 
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: colorSecundario,
       onPrimary: colorNegro900,
       secondary: colorPrimario,
@@ -111,10 +113,12 @@ class AppTheme {
       outline: colorBordeOscuro,
     ),
 
+    dividerTheme: const DividerThemeData(color: gris, thickness: 1, space: 32),
+
     scaffoldBackgroundColor: colorBackgroundOscuro,
 
     // AppBar
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backgroundColor: colorCardOscuro,
       foregroundColor: colorBlanco,
       elevation: 0,
@@ -127,7 +131,7 @@ class AppTheme {
     ),
 
     // BottomNavigationBar
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: colorCardOscuro,
       selectedItemColor: colorSecundario,
       unselectedItemColor: gris,
@@ -140,7 +144,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: colorSecundario,
         foregroundColor: colorNegro900,
-        padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
@@ -161,7 +165,7 @@ class AppTheme {
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: colorBordeOscuro),
+        side: const BorderSide(color: colorBordeOscuro),
       ),
       margin: EdgeInsets.zero,
     ),
