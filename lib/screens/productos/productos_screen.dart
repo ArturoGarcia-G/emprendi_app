@@ -32,8 +32,8 @@ class _ProductosScreenState extends State<ProductosScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: PrimaryAppBar(avatarUrl: ''),
-      drawer: PrimaryDrawer(),
+      appBar: const PrimaryAppBar(avatarUrl: ''),
+      drawer: const PrimaryDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(

@@ -8,6 +8,7 @@ import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:emprendi_app/core/utils/number_utils.dart';
 import 'package:emprendi_app/models/producto.dart';
 import 'package:emprendi_app/routes/pages_routes.dart';
+import 'package:emprendi_app/screens/productos/modales/modal_ajustar_stock.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class ProductoDetalleScreen extends StatelessWidget {
 
     final dateFormat = DateFormat('d MMM yyyy HH:mm', 'es_MX');
     return Scaffold(
-      appBar: SecundaryAppBar(titulo: 'Detalle del producto'),
+      appBar: const SecundaryAppBar(titulo: 'Detalle del producto'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -40,14 +41,14 @@ class ProductoDetalleScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               color: colorScheme.secondary,
                             ),
-                            child: Text('A1'),
+                            child: const Text('A1'),
                           ),
-                          Gap(8),
+                          const Gap(8),
                           Expanded(
                             child: Column(
                               children: [
@@ -62,7 +63,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                           producto.nombre ?? '',
                                           style: textTheme.titleMedium,
                                         ),
-                                        Gap(4),
+                                        const Gap(4),
                                         Text(
                                           'SKU: ${producto.sku}',
                                           style: textTheme.bodyMedium!.copyWith(
@@ -71,11 +72,11 @@ class ProductoDetalleScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     StatusGlobal(status: producto.status ?? ''),
                                   ],
                                 ),
-                                Gap(8),
+                                const Gap(8),
                                 Row(
                                   children: [
                                     Column(
@@ -100,7 +101,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -131,7 +132,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Gap(16),
+                    const Gap(16),
                     CardBase(
                       icono: Icons.trending_up_outlined,
                       titulo: 'Información financiera',
@@ -162,7 +163,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Gap(16),
+                                const Gap(16),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
@@ -188,7 +189,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Divider(),
+                          const Divider(),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
@@ -208,7 +209,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Gap(16),
+                                const Gap(16),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
@@ -230,7 +231,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Gap(16),
+                    const Gap(16),
                     CardBase(
                       icono: Icons.cloud_outlined,
                       titulo: 'Estado de sincronización',
@@ -240,7 +241,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                           BannerStatusSincronizacion(
                             status: producto.statusSincronizacion ?? '',
                           ),
-                          Gap(12),
+                          const Gap(12),
                           Row(
                             children: [
                               Text(
@@ -249,7 +250,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                   color: gris,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Text(
                                 '28 ene 2024, 10:30',
                                 style: textTheme.bodySmall,
@@ -259,7 +260,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Gap(16),
+                    const Gap(16),
                     CardBase(
                       icono: Icons.person_4_outlined,
                       titulo: 'Información de registro',
@@ -275,7 +276,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                   color: gris,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Text(
                                 'Admin',
                                 style: textTheme.bodySmall,
@@ -290,7 +291,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                   color: gris,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Text(
                                 producto.registroFecha == null
                                     ? '--'
@@ -309,7 +310,7 @@ class ProductoDetalleScreen extends StatelessWidget {
                                   color: gris,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Text(
                                 producto.actualizacionFecha == null
                                     ? '--'
@@ -323,22 +324,42 @@ class ProductoDetalleScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Gap(8),
+                    const Gap(8),
                   ],
                 ),
               ),
             ),
-            Gap(8),
+            const Gap(8),
             Row(
               children: [
                 Expanded(
                   child: BotonBase(
                     label: 'Ajustar stock', //TODO: Agregar icono
-                    fn: () => Get.back(),
+                    fn: () {
+                      showModalBottomSheet(
+                        context: context,
+                        useRootNavigator: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16),
+                          ),
+                        ),
+                        builder: (context) {
+                          return ModalAjustarStock(
+                            producto: producto,
+                            fnAjuste: () async {
+                              await productoController.eliminarProducto(
+                                productoId: producto.productoId!,
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
                     tipo: BotonTipo.secundario,
                   ),
                 ),
-                Gap(8),
+                const Gap(8),
                 Expanded(
                   child: BotonBase(
                     label: 'Editar', //TODO: Agregar icono

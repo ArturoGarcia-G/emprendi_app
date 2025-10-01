@@ -23,7 +23,7 @@ class AgregarProductoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SecundaryAppBar(titulo: 'Agregar producto'),
+      appBar: const SecundaryAppBar(titulo: 'Agregar producto'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -36,16 +36,16 @@ class AgregarProductoScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Nombre del producto'),
-                      Gap(4),
+                      const Text('Nombre del producto'),
+                      const Gap(4),
                       InputBase(
                         controller: nombreCtrl,
                         placeholder: 'Ej: Botella de vidrio',
                         requerido: true,
                       ),
-                      Gap(12),
-                      Text('Clave/SKU'),
-                      Gap(4),
+                      const Gap(12),
+                      const Text('Clave/SKU'),
+                      const Gap(4),
                       InputBase(
                         controller: skuCtrl,
                         placeholder: 'Ej: BV-0123',
@@ -53,7 +53,7 @@ class AgregarProductoScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Gap(16),
+                const Gap(16),
                 CardBase(
                   titulo: 'Precios y costos',
                   child: Row(
@@ -62,8 +62,8 @@ class AgregarProductoScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Costo'),
-                            Gap(4),
+                            const Text('Costo'),
+                            const Gap(4),
                             InputBase(
                               controller: costoCtrl,
                               placeholder: '0.00',
@@ -73,13 +73,13 @@ class AgregarProductoScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Gap(8),
+                      const Gap(8),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Precio'),
-                            Gap(4),
+                            const Text('Precio'),
+                            const Gap(4),
                             InputBase(
                               controller: precioCtrl,
                               placeholder: '0.00',
@@ -92,14 +92,14 @@ class AgregarProductoScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Gap(16),
+                const Gap(16),
                 CardBase(
                   titulo: 'Inventario',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Stock inicial'),
-                      Gap(4),
+                      const Text('Stock inicial'),
+                      const Gap(4),
                       InputBase(
                         controller: stockCtrl,
                         placeholder: '0',
@@ -109,7 +109,7 @@ class AgregarProductoScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Gap(24),
+                const Gap(24),
                 Row(
                   children: [
                     Expanded(
@@ -119,7 +119,7 @@ class AgregarProductoScreen extends StatelessWidget {
                         tipo: BotonTipo.secundario,
                       ),
                     ),
-                    Gap(8),
+                    const Gap(8),
                     Expanded(
                       child: Obx(
                         () => BotonBase(

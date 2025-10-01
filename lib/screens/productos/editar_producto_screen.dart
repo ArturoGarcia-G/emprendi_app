@@ -52,7 +52,7 @@ class _EditarProductoScreenState extends State<EditarProductoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SecundaryAppBar(titulo: 'Editar producto'),
+      appBar: const SecundaryAppBar(titulo: 'Editar producto'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -65,16 +65,16 @@ class _EditarProductoScreenState extends State<EditarProductoScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Nombre del producto'),
-                      Gap(4),
+                      const Text('Nombre del producto'),
+                      const Gap(4),
                       InputBase(
                         controller: nombreCtrl,
                         placeholder: 'Ej: Botella de vidrio',
                         requerido: true,
                       ),
-                      Gap(12),
-                      Text('Clave/SKU'),
-                      Gap(4),
+                      const Gap(12),
+                      const Text('Clave/SKU'),
+                      const Gap(4),
                       InputBase(
                         controller: skuCtrl,
                         placeholder: 'Ej: BV-0123',
@@ -82,7 +82,7 @@ class _EditarProductoScreenState extends State<EditarProductoScreen> {
                     ],
                   ),
                 ),
-                Gap(16),
+                const Gap(16),
                 CardBase(
                   titulo: 'Precios y costos',
                   child: Row(
@@ -91,8 +91,8 @@ class _EditarProductoScreenState extends State<EditarProductoScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Costo'),
-                            Gap(4),
+                            const Text('Costo'),
+                            const Gap(4),
                             InputBase(
                               controller: costoCtrl,
                               placeholder: '0.00',
@@ -102,13 +102,13 @@ class _EditarProductoScreenState extends State<EditarProductoScreen> {
                           ],
                         ),
                       ),
-                      Gap(8),
+                      const Gap(8),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Precio'),
-                            Gap(4),
+                            const Text('Precio'),
+                            const Gap(4),
                             InputBase(
                               controller: precioCtrl,
                               placeholder: '0.00',
@@ -121,7 +121,7 @@ class _EditarProductoScreenState extends State<EditarProductoScreen> {
                     ],
                   ),
                 ),
-                Gap(24),
+                const Gap(24),
                 Row(
                   children: [
                     Expanded(
@@ -131,7 +131,7 @@ class _EditarProductoScreenState extends State<EditarProductoScreen> {
                         tipo: BotonTipo.secundario,
                       ),
                     ),
-                    Gap(8),
+                    const Gap(8),
                     Expanded(
                       child: Obx(
                         () => BotonBase(
