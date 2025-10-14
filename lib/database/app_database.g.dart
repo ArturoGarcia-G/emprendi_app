@@ -1178,12 +1178,498 @@ class InventarioMovimientosCompanion
   }
 }
 
+class $ClientesTable extends Clientes
+    with TableInfo<$ClientesTable, ClienteEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClientesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _clienteIdMeta = const VerificationMeta(
+    'clienteId',
+  );
+  @override
+  late final GeneratedColumn<String> clienteId = GeneratedColumn<String>(
+    'cliente_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _telefonoMeta = const VerificationMeta(
+    'telefono',
+  );
+  @override
+  late final GeneratedColumn<String> telefono = GeneratedColumn<String>(
+    'telefono',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  @override
+  late final GeneratedColumn<String> nombre = GeneratedColumn<String>(
+    'nombre',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('activo'),
+  );
+  static const VerificationMeta _registroFechaMeta = const VerificationMeta(
+    'registroFecha',
+  );
+  @override
+  late final GeneratedColumn<DateTime> registroFecha =
+      GeneratedColumn<DateTime>(
+        'registro_fecha',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+        defaultValue: currentDateAndTime,
+      );
+  static const VerificationMeta _actualizacionFechaMeta =
+      const VerificationMeta('actualizacionFecha');
+  @override
+  late final GeneratedColumn<DateTime> actualizacionFecha =
+      GeneratedColumn<DateTime>(
+        'actualizacion_fecha',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _statusSincronizacionMeta =
+      const VerificationMeta('statusSincronizacion');
+  @override
+  late final GeneratedColumn<String> statusSincronizacion =
+      GeneratedColumn<String>(
+        'status_sincronizacion',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('creacion_pendiente'),
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    clienteId,
+    telefono,
+    nombre,
+    status,
+    registroFecha,
+    actualizacionFecha,
+    statusSincronizacion,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'clientes';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClienteEntity> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('cliente_id')) {
+      context.handle(
+        _clienteIdMeta,
+        clienteId.isAcceptableOrUnknown(data['cliente_id']!, _clienteIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_clienteIdMeta);
+    }
+    if (data.containsKey('telefono')) {
+      context.handle(
+        _telefonoMeta,
+        telefono.isAcceptableOrUnknown(data['telefono']!, _telefonoMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_telefonoMeta);
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(
+        _nombreMeta,
+        nombre.isAcceptableOrUnknown(data['nombre']!, _nombreMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nombreMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    if (data.containsKey('registro_fecha')) {
+      context.handle(
+        _registroFechaMeta,
+        registroFecha.isAcceptableOrUnknown(
+          data['registro_fecha']!,
+          _registroFechaMeta,
+        ),
+      );
+    }
+    if (data.containsKey('actualizacion_fecha')) {
+      context.handle(
+        _actualizacionFechaMeta,
+        actualizacionFecha.isAcceptableOrUnknown(
+          data['actualizacion_fecha']!,
+          _actualizacionFechaMeta,
+        ),
+      );
+    }
+    if (data.containsKey('status_sincronizacion')) {
+      context.handle(
+        _statusSincronizacionMeta,
+        statusSincronizacion.isAcceptableOrUnknown(
+          data['status_sincronizacion']!,
+          _statusSincronizacionMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {clienteId};
+  @override
+  ClienteEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClienteEntity(
+      clienteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cliente_id'],
+      )!,
+      telefono: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}telefono'],
+      )!,
+      nombre: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}nombre'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      registroFecha: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}registro_fecha'],
+      )!,
+      actualizacionFecha: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}actualizacion_fecha'],
+      ),
+      statusSincronizacion: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status_sincronizacion'],
+      )!,
+    );
+  }
+
+  @override
+  $ClientesTable createAlias(String alias) {
+    return $ClientesTable(attachedDatabase, alias);
+  }
+}
+
+class ClienteEntity extends DataClass implements Insertable<ClienteEntity> {
+  final String clienteId;
+  final String telefono;
+  final String nombre;
+  final String status;
+  final DateTime registroFecha;
+  final DateTime? actualizacionFecha;
+  final String statusSincronizacion;
+  const ClienteEntity({
+    required this.clienteId,
+    required this.telefono,
+    required this.nombre,
+    required this.status,
+    required this.registroFecha,
+    this.actualizacionFecha,
+    required this.statusSincronizacion,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['cliente_id'] = Variable<String>(clienteId);
+    map['telefono'] = Variable<String>(telefono);
+    map['nombre'] = Variable<String>(nombre);
+    map['status'] = Variable<String>(status);
+    map['registro_fecha'] = Variable<DateTime>(registroFecha);
+    if (!nullToAbsent || actualizacionFecha != null) {
+      map['actualizacion_fecha'] = Variable<DateTime>(actualizacionFecha);
+    }
+    map['status_sincronizacion'] = Variable<String>(statusSincronizacion);
+    return map;
+  }
+
+  ClientesCompanion toCompanion(bool nullToAbsent) {
+    return ClientesCompanion(
+      clienteId: Value(clienteId),
+      telefono: Value(telefono),
+      nombre: Value(nombre),
+      status: Value(status),
+      registroFecha: Value(registroFecha),
+      actualizacionFecha: actualizacionFecha == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actualizacionFecha),
+      statusSincronizacion: Value(statusSincronizacion),
+    );
+  }
+
+  factory ClienteEntity.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClienteEntity(
+      clienteId: serializer.fromJson<String>(json['clienteId']),
+      telefono: serializer.fromJson<String>(json['telefono']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      status: serializer.fromJson<String>(json['status']),
+      registroFecha: serializer.fromJson<DateTime>(json['registroFecha']),
+      actualizacionFecha: serializer.fromJson<DateTime?>(
+        json['actualizacionFecha'],
+      ),
+      statusSincronizacion: serializer.fromJson<String>(
+        json['statusSincronizacion'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'clienteId': serializer.toJson<String>(clienteId),
+      'telefono': serializer.toJson<String>(telefono),
+      'nombre': serializer.toJson<String>(nombre),
+      'status': serializer.toJson<String>(status),
+      'registroFecha': serializer.toJson<DateTime>(registroFecha),
+      'actualizacionFecha': serializer.toJson<DateTime?>(actualizacionFecha),
+      'statusSincronizacion': serializer.toJson<String>(statusSincronizacion),
+    };
+  }
+
+  ClienteEntity copyWith({
+    String? clienteId,
+    String? telefono,
+    String? nombre,
+    String? status,
+    DateTime? registroFecha,
+    Value<DateTime?> actualizacionFecha = const Value.absent(),
+    String? statusSincronizacion,
+  }) => ClienteEntity(
+    clienteId: clienteId ?? this.clienteId,
+    telefono: telefono ?? this.telefono,
+    nombre: nombre ?? this.nombre,
+    status: status ?? this.status,
+    registroFecha: registroFecha ?? this.registroFecha,
+    actualizacionFecha: actualizacionFecha.present
+        ? actualizacionFecha.value
+        : this.actualizacionFecha,
+    statusSincronizacion: statusSincronizacion ?? this.statusSincronizacion,
+  );
+  ClienteEntity copyWithCompanion(ClientesCompanion data) {
+    return ClienteEntity(
+      clienteId: data.clienteId.present ? data.clienteId.value : this.clienteId,
+      telefono: data.telefono.present ? data.telefono.value : this.telefono,
+      nombre: data.nombre.present ? data.nombre.value : this.nombre,
+      status: data.status.present ? data.status.value : this.status,
+      registroFecha: data.registroFecha.present
+          ? data.registroFecha.value
+          : this.registroFecha,
+      actualizacionFecha: data.actualizacionFecha.present
+          ? data.actualizacionFecha.value
+          : this.actualizacionFecha,
+      statusSincronizacion: data.statusSincronizacion.present
+          ? data.statusSincronizacion.value
+          : this.statusSincronizacion,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClienteEntity(')
+          ..write('clienteId: $clienteId, ')
+          ..write('telefono: $telefono, ')
+          ..write('nombre: $nombre, ')
+          ..write('status: $status, ')
+          ..write('registroFecha: $registroFecha, ')
+          ..write('actualizacionFecha: $actualizacionFecha, ')
+          ..write('statusSincronizacion: $statusSincronizacion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    clienteId,
+    telefono,
+    nombre,
+    status,
+    registroFecha,
+    actualizacionFecha,
+    statusSincronizacion,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClienteEntity &&
+          other.clienteId == this.clienteId &&
+          other.telefono == this.telefono &&
+          other.nombre == this.nombre &&
+          other.status == this.status &&
+          other.registroFecha == this.registroFecha &&
+          other.actualizacionFecha == this.actualizacionFecha &&
+          other.statusSincronizacion == this.statusSincronizacion);
+}
+
+class ClientesCompanion extends UpdateCompanion<ClienteEntity> {
+  final Value<String> clienteId;
+  final Value<String> telefono;
+  final Value<String> nombre;
+  final Value<String> status;
+  final Value<DateTime> registroFecha;
+  final Value<DateTime?> actualizacionFecha;
+  final Value<String> statusSincronizacion;
+  final Value<int> rowid;
+  const ClientesCompanion({
+    this.clienteId = const Value.absent(),
+    this.telefono = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.status = const Value.absent(),
+    this.registroFecha = const Value.absent(),
+    this.actualizacionFecha = const Value.absent(),
+    this.statusSincronizacion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClientesCompanion.insert({
+    required String clienteId,
+    required String telefono,
+    required String nombre,
+    this.status = const Value.absent(),
+    this.registroFecha = const Value.absent(),
+    this.actualizacionFecha = const Value.absent(),
+    this.statusSincronizacion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : clienteId = Value(clienteId),
+       telefono = Value(telefono),
+       nombre = Value(nombre);
+  static Insertable<ClienteEntity> custom({
+    Expression<String>? clienteId,
+    Expression<String>? telefono,
+    Expression<String>? nombre,
+    Expression<String>? status,
+    Expression<DateTime>? registroFecha,
+    Expression<DateTime>? actualizacionFecha,
+    Expression<String>? statusSincronizacion,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (clienteId != null) 'cliente_id': clienteId,
+      if (telefono != null) 'telefono': telefono,
+      if (nombre != null) 'nombre': nombre,
+      if (status != null) 'status': status,
+      if (registroFecha != null) 'registro_fecha': registroFecha,
+      if (actualizacionFecha != null) 'actualizacion_fecha': actualizacionFecha,
+      if (statusSincronizacion != null)
+        'status_sincronizacion': statusSincronizacion,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClientesCompanion copyWith({
+    Value<String>? clienteId,
+    Value<String>? telefono,
+    Value<String>? nombre,
+    Value<String>? status,
+    Value<DateTime>? registroFecha,
+    Value<DateTime?>? actualizacionFecha,
+    Value<String>? statusSincronizacion,
+    Value<int>? rowid,
+  }) {
+    return ClientesCompanion(
+      clienteId: clienteId ?? this.clienteId,
+      telefono: telefono ?? this.telefono,
+      nombre: nombre ?? this.nombre,
+      status: status ?? this.status,
+      registroFecha: registroFecha ?? this.registroFecha,
+      actualizacionFecha: actualizacionFecha ?? this.actualizacionFecha,
+      statusSincronizacion: statusSincronizacion ?? this.statusSincronizacion,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (clienteId.present) {
+      map['cliente_id'] = Variable<String>(clienteId.value);
+    }
+    if (telefono.present) {
+      map['telefono'] = Variable<String>(telefono.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (registroFecha.present) {
+      map['registro_fecha'] = Variable<DateTime>(registroFecha.value);
+    }
+    if (actualizacionFecha.present) {
+      map['actualizacion_fecha'] = Variable<DateTime>(actualizacionFecha.value);
+    }
+    if (statusSincronizacion.present) {
+      map['status_sincronizacion'] = Variable<String>(
+        statusSincronizacion.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClientesCompanion(')
+          ..write('clienteId: $clienteId, ')
+          ..write('telefono: $telefono, ')
+          ..write('nombre: $nombre, ')
+          ..write('status: $status, ')
+          ..write('registroFecha: $registroFecha, ')
+          ..write('actualizacionFecha: $actualizacionFecha, ')
+          ..write('statusSincronizacion: $statusSincronizacion, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ProductosTable productos = $ProductosTable(this);
   late final $InventarioMovimientosTable inventarioMovimientos =
       $InventarioMovimientosTable(this);
+  late final $ClientesTable clientes = $ClientesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1191,6 +1677,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     productos,
     inventarioMovimientos,
+    clientes,
   ];
 }
 
@@ -1781,6 +2268,250 @@ typedef $$InventarioMovimientosTableProcessedTableManager =
       InventarioMovimientoEntity,
       PrefetchHooks Function()
     >;
+typedef $$ClientesTableCreateCompanionBuilder =
+    ClientesCompanion Function({
+      required String clienteId,
+      required String telefono,
+      required String nombre,
+      Value<String> status,
+      Value<DateTime> registroFecha,
+      Value<DateTime?> actualizacionFecha,
+      Value<String> statusSincronizacion,
+      Value<int> rowid,
+    });
+typedef $$ClientesTableUpdateCompanionBuilder =
+    ClientesCompanion Function({
+      Value<String> clienteId,
+      Value<String> telefono,
+      Value<String> nombre,
+      Value<String> status,
+      Value<DateTime> registroFecha,
+      Value<DateTime?> actualizacionFecha,
+      Value<String> statusSincronizacion,
+      Value<int> rowid,
+    });
+
+class $$ClientesTableFilterComposer
+    extends Composer<_$AppDatabase, $ClientesTable> {
+  $$ClientesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get clienteId => $composableBuilder(
+    column: $table.clienteId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get telefono => $composableBuilder(
+    column: $table.telefono,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nombre => $composableBuilder(
+    column: $table.nombre,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get actualizacionFecha => $composableBuilder(
+    column: $table.actualizacionFecha,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statusSincronizacion => $composableBuilder(
+    column: $table.statusSincronizacion,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ClientesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClientesTable> {
+  $$ClientesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get clienteId => $composableBuilder(
+    column: $table.clienteId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get telefono => $composableBuilder(
+    column: $table.telefono,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nombre => $composableBuilder(
+    column: $table.nombre,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get actualizacionFecha => $composableBuilder(
+    column: $table.actualizacionFecha,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statusSincronizacion => $composableBuilder(
+    column: $table.statusSincronizacion,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ClientesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClientesTable> {
+  $$ClientesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get clienteId =>
+      $composableBuilder(column: $table.clienteId, builder: (column) => column);
+
+  GeneratedColumn<String> get telefono =>
+      $composableBuilder(column: $table.telefono, builder: (column) => column);
+
+  GeneratedColumn<String> get nombre =>
+      $composableBuilder(column: $table.nombre, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get actualizacionFecha => $composableBuilder(
+    column: $table.actualizacionFecha,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statusSincronizacion => $composableBuilder(
+    column: $table.statusSincronizacion,
+    builder: (column) => column,
+  );
+}
+
+class $$ClientesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClientesTable,
+          ClienteEntity,
+          $$ClientesTableFilterComposer,
+          $$ClientesTableOrderingComposer,
+          $$ClientesTableAnnotationComposer,
+          $$ClientesTableCreateCompanionBuilder,
+          $$ClientesTableUpdateCompanionBuilder,
+          (
+            ClienteEntity,
+            BaseReferences<_$AppDatabase, $ClientesTable, ClienteEntity>,
+          ),
+          ClienteEntity,
+          PrefetchHooks Function()
+        > {
+  $$ClientesTableTableManager(_$AppDatabase db, $ClientesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClientesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClientesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClientesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> clienteId = const Value.absent(),
+                Value<String> telefono = const Value.absent(),
+                Value<String> nombre = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<DateTime> registroFecha = const Value.absent(),
+                Value<DateTime?> actualizacionFecha = const Value.absent(),
+                Value<String> statusSincronizacion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClientesCompanion(
+                clienteId: clienteId,
+                telefono: telefono,
+                nombre: nombre,
+                status: status,
+                registroFecha: registroFecha,
+                actualizacionFecha: actualizacionFecha,
+                statusSincronizacion: statusSincronizacion,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String clienteId,
+                required String telefono,
+                required String nombre,
+                Value<String> status = const Value.absent(),
+                Value<DateTime> registroFecha = const Value.absent(),
+                Value<DateTime?> actualizacionFecha = const Value.absent(),
+                Value<String> statusSincronizacion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClientesCompanion.insert(
+                clienteId: clienteId,
+                telefono: telefono,
+                nombre: nombre,
+                status: status,
+                registroFecha: registroFecha,
+                actualizacionFecha: actualizacionFecha,
+                statusSincronizacion: statusSincronizacion,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ClientesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClientesTable,
+      ClienteEntity,
+      $$ClientesTableFilterComposer,
+      $$ClientesTableOrderingComposer,
+      $$ClientesTableAnnotationComposer,
+      $$ClientesTableCreateCompanionBuilder,
+      $$ClientesTableUpdateCompanionBuilder,
+      (
+        ClienteEntity,
+        BaseReferences<_$AppDatabase, $ClientesTable, ClienteEntity>,
+      ),
+      ClienteEntity,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1789,4 +2520,6 @@ class $AppDatabaseManager {
       $$ProductosTableTableManager(_db, _db.productos);
   $$InventarioMovimientosTableTableManager get inventarioMovimientos =>
       $$InventarioMovimientosTableTableManager(_db, _db.inventarioMovimientos);
+  $$ClientesTableTableManager get clientes =>
+      $$ClientesTableTableManager(_db, _db.clientes);
 }
