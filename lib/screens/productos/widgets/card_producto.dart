@@ -37,10 +37,13 @@ class CardProducto extends StatelessWidget {
                   ),
                   child: const Text('A1'),
                 ),
-                onTap: () => Get.toNamed(
-                  PagesRoutes.productoDetalleScreen,
-                  arguments: producto,
-                ),
+                onTap: () async {
+                  await Get.toNamed(
+                    PagesRoutes.productoDetalleScreen,
+                    arguments: producto.productoId,
+                  );
+                  productoController.listarProductos();
+                },
               ),
               const Gap(12),
               Expanded(
@@ -48,10 +51,13 @@ class CardProducto extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () => Get.toNamed(
-                        PagesRoutes.productoDetalleScreen,
-                        arguments: producto,
-                      ),
+                      onTap: () async {
+                        await Get.toNamed(
+                          PagesRoutes.productoDetalleScreen,
+                          arguments: producto.productoId,
+                        );
+                        productoController.listarProductos();
+                      },
                       child: Row(
                         children: [
                           Text(
