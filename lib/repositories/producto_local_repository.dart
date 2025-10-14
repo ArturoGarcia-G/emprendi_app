@@ -54,6 +54,26 @@ class ProductoLocalRepository {
         .toList();
   }
 
+  Future<model.Producto> obtenerProducto({required String productoId}) async {
+    final entity = await (db.select(
+      db.productos,
+    )..where((productos) => productos.uuid.equals(productoId))).getSingle();
+
+    // Mapeamos ProductoEntity a Producto
+    return model.Producto(
+      productoId: entity.uuid,
+      sku: entity.sku,
+      nombre: entity.nombre,
+      stock: entity.stock,
+      precio: entity.precio,
+      costo: entity.costo,
+      status: entity.status,
+      registroFecha: entity.registroFecha,
+      actualizacionFecha: entity.actualizacionFecha,
+      statusSincronizacion: entity.statusSincronizacion,
+    );
+  }
+
   Future<void> upsertProducto(model.Producto p) async {
     final companion = ProductosCompanion(
       uuid: Value(p.productoId ?? const Uuid().v4()),

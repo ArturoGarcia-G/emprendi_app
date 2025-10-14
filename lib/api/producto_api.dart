@@ -45,6 +45,21 @@ class ProductoApi {
     }
   }
 
+  // Listar productos
+  Future<Producto> obtenerProducto({
+    required String productoId,
+  }) async {
+    try {
+      final response = await _apiHandler.get('productos', productoId, {});
+
+      final Map<String, dynamic> data = response;
+
+      return Producto.fromJson(data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // Editar un producto
   Future<void> editarProducto({
     required String productoId,

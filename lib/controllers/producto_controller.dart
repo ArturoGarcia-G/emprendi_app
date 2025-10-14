@@ -85,6 +85,28 @@ class ProductoController extends GetxController {
     }
   }
 
+  // Método para listar productos
+  Future<Producto> obtenerProducto({required String productoId}) async {
+    try {
+      final localRepo = ProductoLocalRepository(AppDatabase());
+
+      try {
+        // Intentamos traer del API y guardamos si el listado es exitoso
+        final registroProductosApi = await productoApi.obtenerProducto(
+          productoId: productoId,
+        );
+
+        await localRepo.upsertProducto(registroProductosApi);
+      } catch (error) {
+        rethrow;
+      }
+      final producto = await localRepo.obtenerProducto(productoId: productoId);
+      return producto;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // Método para editar un producto
   Future<void> editarProducto({
     required String productoId,

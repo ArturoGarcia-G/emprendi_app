@@ -33,8 +33,8 @@ final List<GetPage> pages = <GetPage>[
   GetPage(
     name: PagesRoutes.productoDetalleScreen,
     page: () {
-      final producto = Get.arguments as Producto;
-      return ProductoDetalleScreen(producto: producto);
+      final productoId = Get.arguments as String;
+      return ProductoDetalleScreen(productoId: productoId);
     },
     transition: Transition.rightToLeft,
     transitionDuration: Duration(milliseconds: 300),
