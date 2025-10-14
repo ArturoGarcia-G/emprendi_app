@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:emprendi_app/database/inventario_movimientos_table.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'productos_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Productos])
+@DriftDatabase(tables: [Productos, InventarioMovimientos])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

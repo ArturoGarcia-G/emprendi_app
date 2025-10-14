@@ -622,15 +622,576 @@ class ProductosCompanion extends UpdateCompanion<ProductoEntity> {
   }
 }
 
+class $InventarioMovimientosTable extends InventarioMovimientos
+    with TableInfo<$InventarioMovimientosTable, InventarioMovimientoEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $InventarioMovimientosTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _inventarioMovimientoIdMeta =
+      const VerificationMeta('inventarioMovimientoId');
+  @override
+  late final GeneratedColumn<String> inventarioMovimientoId =
+      GeneratedColumn<String>(
+        'inventario_movimiento_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _productoIdMeta = const VerificationMeta(
+    'productoId',
+  );
+  @override
+  late final GeneratedColumn<String> productoId = GeneratedColumn<String>(
+    'producto_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ventaIdMeta = const VerificationMeta(
+    'ventaId',
+  );
+  @override
+  late final GeneratedColumn<String> ventaId = GeneratedColumn<String>(
+    'venta_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cantidadMeta = const VerificationMeta(
+    'cantidad',
+  );
+  @override
+  late final GeneratedColumn<int> cantidad = GeneratedColumn<int>(
+    'cantidad',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descripcionMeta = const VerificationMeta(
+    'descripcion',
+  );
+  @override
+  late final GeneratedColumn<String> descripcion = GeneratedColumn<String>(
+    'descripcion',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tipoMeta = const VerificationMeta('tipo');
+  @override
+  late final GeneratedColumn<String> tipo = GeneratedColumn<String>(
+    'tipo',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _registroFechaMeta = const VerificationMeta(
+    'registroFecha',
+  );
+  @override
+  late final GeneratedColumn<DateTime> registroFecha =
+      GeneratedColumn<DateTime>(
+        'registro_fecha',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+        defaultValue: currentDateAndTime,
+      );
+  static const VerificationMeta _statusSincronizacionMeta =
+      const VerificationMeta('statusSincronizacion');
+  @override
+  late final GeneratedColumn<String> statusSincronizacion =
+      GeneratedColumn<String>(
+        'status_sincronizacion',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('creacion_pendiente'),
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    inventarioMovimientoId,
+    productoId,
+    ventaId,
+    cantidad,
+    descripcion,
+    tipo,
+    registroFecha,
+    statusSincronizacion,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'inventario_movimientos';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<InventarioMovimientoEntity> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('inventario_movimiento_id')) {
+      context.handle(
+        _inventarioMovimientoIdMeta,
+        inventarioMovimientoId.isAcceptableOrUnknown(
+          data['inventario_movimiento_id']!,
+          _inventarioMovimientoIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_inventarioMovimientoIdMeta);
+    }
+    if (data.containsKey('producto_id')) {
+      context.handle(
+        _productoIdMeta,
+        productoId.isAcceptableOrUnknown(data['producto_id']!, _productoIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_productoIdMeta);
+    }
+    if (data.containsKey('venta_id')) {
+      context.handle(
+        _ventaIdMeta,
+        ventaId.isAcceptableOrUnknown(data['venta_id']!, _ventaIdMeta),
+      );
+    }
+    if (data.containsKey('cantidad')) {
+      context.handle(
+        _cantidadMeta,
+        cantidad.isAcceptableOrUnknown(data['cantidad']!, _cantidadMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cantidadMeta);
+    }
+    if (data.containsKey('descripcion')) {
+      context.handle(
+        _descripcionMeta,
+        descripcion.isAcceptableOrUnknown(
+          data['descripcion']!,
+          _descripcionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descripcionMeta);
+    }
+    if (data.containsKey('tipo')) {
+      context.handle(
+        _tipoMeta,
+        tipo.isAcceptableOrUnknown(data['tipo']!, _tipoMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tipoMeta);
+    }
+    if (data.containsKey('registro_fecha')) {
+      context.handle(
+        _registroFechaMeta,
+        registroFecha.isAcceptableOrUnknown(
+          data['registro_fecha']!,
+          _registroFechaMeta,
+        ),
+      );
+    }
+    if (data.containsKey('status_sincronizacion')) {
+      context.handle(
+        _statusSincronizacionMeta,
+        statusSincronizacion.isAcceptableOrUnknown(
+          data['status_sincronizacion']!,
+          _statusSincronizacionMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {inventarioMovimientoId};
+  @override
+  InventarioMovimientoEntity map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return InventarioMovimientoEntity(
+      inventarioMovimientoId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}inventario_movimiento_id'],
+      )!,
+      productoId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}producto_id'],
+      )!,
+      ventaId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}venta_id'],
+      ),
+      cantidad: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}cantidad'],
+      )!,
+      descripcion: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}descripcion'],
+      )!,
+      tipo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tipo'],
+      )!,
+      registroFecha: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}registro_fecha'],
+      )!,
+      statusSincronizacion: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status_sincronizacion'],
+      )!,
+    );
+  }
+
+  @override
+  $InventarioMovimientosTable createAlias(String alias) {
+    return $InventarioMovimientosTable(attachedDatabase, alias);
+  }
+}
+
+class InventarioMovimientoEntity extends DataClass
+    implements Insertable<InventarioMovimientoEntity> {
+  final String inventarioMovimientoId;
+  final String productoId;
+  final String? ventaId;
+  final int cantidad;
+  final String descripcion;
+  final String tipo;
+  final DateTime registroFecha;
+  final String statusSincronizacion;
+  const InventarioMovimientoEntity({
+    required this.inventarioMovimientoId,
+    required this.productoId,
+    this.ventaId,
+    required this.cantidad,
+    required this.descripcion,
+    required this.tipo,
+    required this.registroFecha,
+    required this.statusSincronizacion,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['inventario_movimiento_id'] = Variable<String>(inventarioMovimientoId);
+    map['producto_id'] = Variable<String>(productoId);
+    if (!nullToAbsent || ventaId != null) {
+      map['venta_id'] = Variable<String>(ventaId);
+    }
+    map['cantidad'] = Variable<int>(cantidad);
+    map['descripcion'] = Variable<String>(descripcion);
+    map['tipo'] = Variable<String>(tipo);
+    map['registro_fecha'] = Variable<DateTime>(registroFecha);
+    map['status_sincronizacion'] = Variable<String>(statusSincronizacion);
+    return map;
+  }
+
+  InventarioMovimientosCompanion toCompanion(bool nullToAbsent) {
+    return InventarioMovimientosCompanion(
+      inventarioMovimientoId: Value(inventarioMovimientoId),
+      productoId: Value(productoId),
+      ventaId: ventaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ventaId),
+      cantidad: Value(cantidad),
+      descripcion: Value(descripcion),
+      tipo: Value(tipo),
+      registroFecha: Value(registroFecha),
+      statusSincronizacion: Value(statusSincronizacion),
+    );
+  }
+
+  factory InventarioMovimientoEntity.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return InventarioMovimientoEntity(
+      inventarioMovimientoId: serializer.fromJson<String>(
+        json['inventarioMovimientoId'],
+      ),
+      productoId: serializer.fromJson<String>(json['productoId']),
+      ventaId: serializer.fromJson<String?>(json['ventaId']),
+      cantidad: serializer.fromJson<int>(json['cantidad']),
+      descripcion: serializer.fromJson<String>(json['descripcion']),
+      tipo: serializer.fromJson<String>(json['tipo']),
+      registroFecha: serializer.fromJson<DateTime>(json['registroFecha']),
+      statusSincronizacion: serializer.fromJson<String>(
+        json['statusSincronizacion'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'inventarioMovimientoId': serializer.toJson<String>(
+        inventarioMovimientoId,
+      ),
+      'productoId': serializer.toJson<String>(productoId),
+      'ventaId': serializer.toJson<String?>(ventaId),
+      'cantidad': serializer.toJson<int>(cantidad),
+      'descripcion': serializer.toJson<String>(descripcion),
+      'tipo': serializer.toJson<String>(tipo),
+      'registroFecha': serializer.toJson<DateTime>(registroFecha),
+      'statusSincronizacion': serializer.toJson<String>(statusSincronizacion),
+    };
+  }
+
+  InventarioMovimientoEntity copyWith({
+    String? inventarioMovimientoId,
+    String? productoId,
+    Value<String?> ventaId = const Value.absent(),
+    int? cantidad,
+    String? descripcion,
+    String? tipo,
+    DateTime? registroFecha,
+    String? statusSincronizacion,
+  }) => InventarioMovimientoEntity(
+    inventarioMovimientoId:
+        inventarioMovimientoId ?? this.inventarioMovimientoId,
+    productoId: productoId ?? this.productoId,
+    ventaId: ventaId.present ? ventaId.value : this.ventaId,
+    cantidad: cantidad ?? this.cantidad,
+    descripcion: descripcion ?? this.descripcion,
+    tipo: tipo ?? this.tipo,
+    registroFecha: registroFecha ?? this.registroFecha,
+    statusSincronizacion: statusSincronizacion ?? this.statusSincronizacion,
+  );
+  InventarioMovimientoEntity copyWithCompanion(
+    InventarioMovimientosCompanion data,
+  ) {
+    return InventarioMovimientoEntity(
+      inventarioMovimientoId: data.inventarioMovimientoId.present
+          ? data.inventarioMovimientoId.value
+          : this.inventarioMovimientoId,
+      productoId: data.productoId.present
+          ? data.productoId.value
+          : this.productoId,
+      ventaId: data.ventaId.present ? data.ventaId.value : this.ventaId,
+      cantidad: data.cantidad.present ? data.cantidad.value : this.cantidad,
+      descripcion: data.descripcion.present
+          ? data.descripcion.value
+          : this.descripcion,
+      tipo: data.tipo.present ? data.tipo.value : this.tipo,
+      registroFecha: data.registroFecha.present
+          ? data.registroFecha.value
+          : this.registroFecha,
+      statusSincronizacion: data.statusSincronizacion.present
+          ? data.statusSincronizacion.value
+          : this.statusSincronizacion,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InventarioMovimientoEntity(')
+          ..write('inventarioMovimientoId: $inventarioMovimientoId, ')
+          ..write('productoId: $productoId, ')
+          ..write('ventaId: $ventaId, ')
+          ..write('cantidad: $cantidad, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('tipo: $tipo, ')
+          ..write('registroFecha: $registroFecha, ')
+          ..write('statusSincronizacion: $statusSincronizacion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    inventarioMovimientoId,
+    productoId,
+    ventaId,
+    cantidad,
+    descripcion,
+    tipo,
+    registroFecha,
+    statusSincronizacion,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is InventarioMovimientoEntity &&
+          other.inventarioMovimientoId == this.inventarioMovimientoId &&
+          other.productoId == this.productoId &&
+          other.ventaId == this.ventaId &&
+          other.cantidad == this.cantidad &&
+          other.descripcion == this.descripcion &&
+          other.tipo == this.tipo &&
+          other.registroFecha == this.registroFecha &&
+          other.statusSincronizacion == this.statusSincronizacion);
+}
+
+class InventarioMovimientosCompanion
+    extends UpdateCompanion<InventarioMovimientoEntity> {
+  final Value<String> inventarioMovimientoId;
+  final Value<String> productoId;
+  final Value<String?> ventaId;
+  final Value<int> cantidad;
+  final Value<String> descripcion;
+  final Value<String> tipo;
+  final Value<DateTime> registroFecha;
+  final Value<String> statusSincronizacion;
+  final Value<int> rowid;
+  const InventarioMovimientosCompanion({
+    this.inventarioMovimientoId = const Value.absent(),
+    this.productoId = const Value.absent(),
+    this.ventaId = const Value.absent(),
+    this.cantidad = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.tipo = const Value.absent(),
+    this.registroFecha = const Value.absent(),
+    this.statusSincronizacion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  InventarioMovimientosCompanion.insert({
+    required String inventarioMovimientoId,
+    required String productoId,
+    this.ventaId = const Value.absent(),
+    required int cantidad,
+    required String descripcion,
+    required String tipo,
+    this.registroFecha = const Value.absent(),
+    this.statusSincronizacion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : inventarioMovimientoId = Value(inventarioMovimientoId),
+       productoId = Value(productoId),
+       cantidad = Value(cantidad),
+       descripcion = Value(descripcion),
+       tipo = Value(tipo);
+  static Insertable<InventarioMovimientoEntity> custom({
+    Expression<String>? inventarioMovimientoId,
+    Expression<String>? productoId,
+    Expression<String>? ventaId,
+    Expression<int>? cantidad,
+    Expression<String>? descripcion,
+    Expression<String>? tipo,
+    Expression<DateTime>? registroFecha,
+    Expression<String>? statusSincronizacion,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (inventarioMovimientoId != null)
+        'inventario_movimiento_id': inventarioMovimientoId,
+      if (productoId != null) 'producto_id': productoId,
+      if (ventaId != null) 'venta_id': ventaId,
+      if (cantidad != null) 'cantidad': cantidad,
+      if (descripcion != null) 'descripcion': descripcion,
+      if (tipo != null) 'tipo': tipo,
+      if (registroFecha != null) 'registro_fecha': registroFecha,
+      if (statusSincronizacion != null)
+        'status_sincronizacion': statusSincronizacion,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  InventarioMovimientosCompanion copyWith({
+    Value<String>? inventarioMovimientoId,
+    Value<String>? productoId,
+    Value<String?>? ventaId,
+    Value<int>? cantidad,
+    Value<String>? descripcion,
+    Value<String>? tipo,
+    Value<DateTime>? registroFecha,
+    Value<String>? statusSincronizacion,
+    Value<int>? rowid,
+  }) {
+    return InventarioMovimientosCompanion(
+      inventarioMovimientoId:
+          inventarioMovimientoId ?? this.inventarioMovimientoId,
+      productoId: productoId ?? this.productoId,
+      ventaId: ventaId ?? this.ventaId,
+      cantidad: cantidad ?? this.cantidad,
+      descripcion: descripcion ?? this.descripcion,
+      tipo: tipo ?? this.tipo,
+      registroFecha: registroFecha ?? this.registroFecha,
+      statusSincronizacion: statusSincronizacion ?? this.statusSincronizacion,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (inventarioMovimientoId.present) {
+      map['inventario_movimiento_id'] = Variable<String>(
+        inventarioMovimientoId.value,
+      );
+    }
+    if (productoId.present) {
+      map['producto_id'] = Variable<String>(productoId.value);
+    }
+    if (ventaId.present) {
+      map['venta_id'] = Variable<String>(ventaId.value);
+    }
+    if (cantidad.present) {
+      map['cantidad'] = Variable<int>(cantidad.value);
+    }
+    if (descripcion.present) {
+      map['descripcion'] = Variable<String>(descripcion.value);
+    }
+    if (tipo.present) {
+      map['tipo'] = Variable<String>(tipo.value);
+    }
+    if (registroFecha.present) {
+      map['registro_fecha'] = Variable<DateTime>(registroFecha.value);
+    }
+    if (statusSincronizacion.present) {
+      map['status_sincronizacion'] = Variable<String>(
+        statusSincronizacion.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InventarioMovimientosCompanion(')
+          ..write('inventarioMovimientoId: $inventarioMovimientoId, ')
+          ..write('productoId: $productoId, ')
+          ..write('ventaId: $ventaId, ')
+          ..write('cantidad: $cantidad, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('tipo: $tipo, ')
+          ..write('registroFecha: $registroFecha, ')
+          ..write('statusSincronizacion: $statusSincronizacion, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ProductosTable productos = $ProductosTable(this);
+  late final $InventarioMovimientosTable inventarioMovimientos =
+      $InventarioMovimientosTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [productos];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    productos,
+    inventarioMovimientos,
+  ];
 }
 
 typedef $$ProductosTableCreateCompanionBuilder =
@@ -934,10 +1495,298 @@ typedef $$ProductosTableProcessedTableManager =
       ProductoEntity,
       PrefetchHooks Function()
     >;
+typedef $$InventarioMovimientosTableCreateCompanionBuilder =
+    InventarioMovimientosCompanion Function({
+      required String inventarioMovimientoId,
+      required String productoId,
+      Value<String?> ventaId,
+      required int cantidad,
+      required String descripcion,
+      required String tipo,
+      Value<DateTime> registroFecha,
+      Value<String> statusSincronizacion,
+      Value<int> rowid,
+    });
+typedef $$InventarioMovimientosTableUpdateCompanionBuilder =
+    InventarioMovimientosCompanion Function({
+      Value<String> inventarioMovimientoId,
+      Value<String> productoId,
+      Value<String?> ventaId,
+      Value<int> cantidad,
+      Value<String> descripcion,
+      Value<String> tipo,
+      Value<DateTime> registroFecha,
+      Value<String> statusSincronizacion,
+      Value<int> rowid,
+    });
+
+class $$InventarioMovimientosTableFilterComposer
+    extends Composer<_$AppDatabase, $InventarioMovimientosTable> {
+  $$InventarioMovimientosTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get inventarioMovimientoId => $composableBuilder(
+    column: $table.inventarioMovimientoId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get productoId => $composableBuilder(
+    column: $table.productoId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ventaId => $composableBuilder(
+    column: $table.ventaId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get cantidad => $composableBuilder(
+    column: $table.cantidad,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get descripcion => $composableBuilder(
+    column: $table.descripcion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tipo => $composableBuilder(
+    column: $table.tipo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statusSincronizacion => $composableBuilder(
+    column: $table.statusSincronizacion,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$InventarioMovimientosTableOrderingComposer
+    extends Composer<_$AppDatabase, $InventarioMovimientosTable> {
+  $$InventarioMovimientosTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get inventarioMovimientoId => $composableBuilder(
+    column: $table.inventarioMovimientoId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get productoId => $composableBuilder(
+    column: $table.productoId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ventaId => $composableBuilder(
+    column: $table.ventaId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get cantidad => $composableBuilder(
+    column: $table.cantidad,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get descripcion => $composableBuilder(
+    column: $table.descripcion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tipo => $composableBuilder(
+    column: $table.tipo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statusSincronizacion => $composableBuilder(
+    column: $table.statusSincronizacion,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$InventarioMovimientosTableAnnotationComposer
+    extends Composer<_$AppDatabase, $InventarioMovimientosTable> {
+  $$InventarioMovimientosTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get inventarioMovimientoId => $composableBuilder(
+    column: $table.inventarioMovimientoId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get productoId => $composableBuilder(
+    column: $table.productoId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get ventaId =>
+      $composableBuilder(column: $table.ventaId, builder: (column) => column);
+
+  GeneratedColumn<int> get cantidad =>
+      $composableBuilder(column: $table.cantidad, builder: (column) => column);
+
+  GeneratedColumn<String> get descripcion => $composableBuilder(
+    column: $table.descripcion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tipo =>
+      $composableBuilder(column: $table.tipo, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get registroFecha => $composableBuilder(
+    column: $table.registroFecha,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statusSincronizacion => $composableBuilder(
+    column: $table.statusSincronizacion,
+    builder: (column) => column,
+  );
+}
+
+class $$InventarioMovimientosTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $InventarioMovimientosTable,
+          InventarioMovimientoEntity,
+          $$InventarioMovimientosTableFilterComposer,
+          $$InventarioMovimientosTableOrderingComposer,
+          $$InventarioMovimientosTableAnnotationComposer,
+          $$InventarioMovimientosTableCreateCompanionBuilder,
+          $$InventarioMovimientosTableUpdateCompanionBuilder,
+          (
+            InventarioMovimientoEntity,
+            BaseReferences<
+              _$AppDatabase,
+              $InventarioMovimientosTable,
+              InventarioMovimientoEntity
+            >,
+          ),
+          InventarioMovimientoEntity,
+          PrefetchHooks Function()
+        > {
+  $$InventarioMovimientosTableTableManager(
+    _$AppDatabase db,
+    $InventarioMovimientosTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$InventarioMovimientosTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$InventarioMovimientosTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$InventarioMovimientosTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> inventarioMovimientoId = const Value.absent(),
+                Value<String> productoId = const Value.absent(),
+                Value<String?> ventaId = const Value.absent(),
+                Value<int> cantidad = const Value.absent(),
+                Value<String> descripcion = const Value.absent(),
+                Value<String> tipo = const Value.absent(),
+                Value<DateTime> registroFecha = const Value.absent(),
+                Value<String> statusSincronizacion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InventarioMovimientosCompanion(
+                inventarioMovimientoId: inventarioMovimientoId,
+                productoId: productoId,
+                ventaId: ventaId,
+                cantidad: cantidad,
+                descripcion: descripcion,
+                tipo: tipo,
+                registroFecha: registroFecha,
+                statusSincronizacion: statusSincronizacion,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String inventarioMovimientoId,
+                required String productoId,
+                Value<String?> ventaId = const Value.absent(),
+                required int cantidad,
+                required String descripcion,
+                required String tipo,
+                Value<DateTime> registroFecha = const Value.absent(),
+                Value<String> statusSincronizacion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InventarioMovimientosCompanion.insert(
+                inventarioMovimientoId: inventarioMovimientoId,
+                productoId: productoId,
+                ventaId: ventaId,
+                cantidad: cantidad,
+                descripcion: descripcion,
+                tipo: tipo,
+                registroFecha: registroFecha,
+                statusSincronizacion: statusSincronizacion,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$InventarioMovimientosTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $InventarioMovimientosTable,
+      InventarioMovimientoEntity,
+      $$InventarioMovimientosTableFilterComposer,
+      $$InventarioMovimientosTableOrderingComposer,
+      $$InventarioMovimientosTableAnnotationComposer,
+      $$InventarioMovimientosTableCreateCompanionBuilder,
+      $$InventarioMovimientosTableUpdateCompanionBuilder,
+      (
+        InventarioMovimientoEntity,
+        BaseReferences<
+          _$AppDatabase,
+          $InventarioMovimientosTable,
+          InventarioMovimientoEntity
+        >,
+      ),
+      InventarioMovimientoEntity,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$ProductosTableTableManager get productos =>
       $$ProductosTableTableManager(_db, _db.productos);
+  $$InventarioMovimientosTableTableManager get inventarioMovimientos =>
+      $$InventarioMovimientosTableTableManager(_db, _db.inventarioMovimientos);
 }
