@@ -80,6 +80,15 @@ class AppTheme {
       margin: EdgeInsets.zero,
     ),
 
+    //Floating action button
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: colorPrimario,
+      foregroundColor: colorBlanco,
+      elevation: 4,
+      sizeConstraints: BoxConstraints.tightFor(width: 50, height: 50),
+      shape: CircleBorder(),
+    ),
+
     // Iconos
     iconTheme: const IconThemeData(color: colorNegro900, size: 24),
 
@@ -168,6 +177,15 @@ class AppTheme {
         side: const BorderSide(color: colorBordeOscuro),
       ),
       margin: EdgeInsets.zero,
+    ),
+
+    //Floating action button
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: colorSecundario,
+      foregroundColor: colorNegro900,
+      elevation: 4,
+      sizeConstraints: BoxConstraints.tightFor(width: 50, height: 50),
+      shape: CircleBorder(),
     ),
 
     // Iconos
