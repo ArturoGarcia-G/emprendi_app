@@ -20,6 +20,8 @@ class AppTheme {
       error: colorRojo800,
       onError: colorBlanco,
       outline: colorBordeClaro,
+      primaryContainer: colorPrimario10p,
+      onPrimaryContainer: colorPrimario,
     ),
 
     dividerTheme: const DividerThemeData(color: gris, thickness: 1, space: 32),
@@ -120,6 +122,8 @@ class AppTheme {
       error: colorRojo800,
       onError: colorBlanco,
       outline: colorBordeOscuro,
+      primaryContainer: colorSecundario10p,
+      onPrimaryContainer: colorSecundario,
     ),
 
     dividerTheme: const DividerThemeData(color: gris, thickness: 1, space: 32),

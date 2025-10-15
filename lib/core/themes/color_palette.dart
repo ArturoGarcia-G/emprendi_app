@@ -72,7 +72,9 @@ const colorAquamarina = Color.fromRGBO(77, 182, 172, 1.0);
 const colorBlanco = Color.fromRGBO(255, 255, 255, 1.0);
 const colorNegro900 = Color.fromRGBO(38, 34, 33, 1.0);
 const colorPrimario = Color.fromRGBO(0, 121, 107, 1);
+const colorPrimario10p = Color.fromRGBO(0, 121, 107, 0.1);
 const colorSecundario = Color.fromRGBO(77, 182, 172, 1);
+const colorSecundario10p = Color.fromRGBO(77, 182, 172, 0.1);
 
 //Claro
 const colorBackgroundClaro = Color.fromRGBO(254, 254, 254, 1.0);
