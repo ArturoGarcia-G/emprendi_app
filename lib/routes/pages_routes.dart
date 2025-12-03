@@ -19,4 +19,8 @@ class PagesRoutes {
   static const agregarProductoScreen = '/agregar-producto';
   static const editarProductoScreen = '/editar-producto';
   static const productoDetalleScreen = '/detalle-producto';
+
+  //Clientes
+  static const gestorClientesScreen = '/gestor-clientes';
+  static const clienteDetalleScreen = '/detalle-cliente';
 }

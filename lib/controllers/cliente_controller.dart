@@ -103,8 +103,6 @@ class ClienteController extends GetxController {
     required String clienteId,
     required String telefono,
     required String nombre,
-    required double precio,
-    required double costo,
   }) async {
     try {
       isLoading.value = true;
@@ -133,9 +131,6 @@ class ClienteController extends GetxController {
         type: SnackbarType.success,
       );
 
-      listarClientes();
-
-      Get.back();
     } catch (e) {
       SnackbarHelper.show(e.toString());
     } finally {
