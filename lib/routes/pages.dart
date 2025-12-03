@@ -7,6 +7,7 @@ import 'package:emprendi_app/screens/productos/cliente_detalle_screen.dart';
 import 'package:emprendi_app/screens/productos/editar_producto_screen.dart';
 import 'package:emprendi_app/screens/productos/producto_detalle_screen.dart';
 import 'package:emprendi_app/screens/splash_screen.dart';
+import 'package:emprendi_app/screens/usuarios/usuarios_screen.dart';
 import 'package:get/route_manager.dart';
 import './pages_routes.dart';
 
@@ -58,6 +59,16 @@ final List<GetPage> pages = <GetPage>[
       return ClienteDetalleScreen(clienteId: clienteId);
     },
     transition: Transition.rightToLeft,
+    transitionDuration: const Duration(milliseconds: 300),
+  ),
+
+  //Usuarios
+  GetPage(
+    name: PagesRoutes.gestorUsuariosScreen,
+    page: () {
+      return const UsuariosScreen();
+    },
+    transition: Transition.topLevel,
     transitionDuration: const Duration(milliseconds: 300),
   ),
 ];

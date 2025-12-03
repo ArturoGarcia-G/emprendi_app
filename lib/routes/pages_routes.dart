@@ -23,4 +23,7 @@ class PagesRoutes {
   //Clientes
   static const gestorClientesScreen = '/gestor-clientes';
   static const clienteDetalleScreen = '/detalle-cliente';
+
+  //Usuarios
+  static const gestorUsuariosScreen = '/gestor-usuarios';
 }

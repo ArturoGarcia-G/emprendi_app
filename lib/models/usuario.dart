@@ -11,11 +11,12 @@ class Usuario {
   @JsonKey(ignore: true)
   String? password;
   String? status;
-  String? registroFecha;
+  DateTime? registroFecha;
   String? registroAutorId;
-  String? actualizacionFecha;
+  DateTime? actualizacionFecha;
   String? actualizacionAutorId;
-  String? idNegocio;
+  String? negocioId;
+  String? statusSincronizacion;
 
   Usuario({
     this.usuarioId,
@@ -27,7 +28,8 @@ class Usuario {
     this.registroAutorId,
     this.actualizacionFecha,
     this.actualizacionAutorId,
-    this.idNegocio,
+    this.negocioId,
+    this.statusSincronizacion,
   });
 
   /// Generado automáticamente con json_serializable
