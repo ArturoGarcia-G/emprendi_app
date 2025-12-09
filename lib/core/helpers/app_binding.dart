@@ -3,11 +3,15 @@ import 'package:emprendi_app/api/auth_api.dart';
 import 'package:emprendi_app/api/cliente_api.dart';
 import 'package:emprendi_app/api/inventario_api.dart';
 import 'package:emprendi_app/api/producto_api.dart';
+import 'package:emprendi_app/api/usuario_api.dart';
+import 'package:emprendi_app/api/venta_api.dart';
 import 'package:emprendi_app/controllers/auth_controller.dart';
 import 'package:emprendi_app/controllers/cliente_controller.dart';
 import 'package:emprendi_app/controllers/inventario_controller.dart';
 import 'package:emprendi_app/controllers/producto_controller.dart';
 import 'package:emprendi_app/controllers/theme_controller.dart';
+import 'package:emprendi_app/controllers/usuario_controller.dart';
+import 'package:emprendi_app/controllers/venta_controller.dart';
 import 'package:emprendi_app/database/app_database.dart';
 import 'package:emprendi_app/services/sync_service.dart';
 import 'package:get/get.dart';
@@ -26,6 +30,8 @@ class AppBinding {
     Get.put(AuthApi(Get.find<ApiHandler>()), permanent: true);
     Get.put(ProductoApi(Get.find<ApiHandler>()), permanent: true);
     Get.put(ClienteApi(Get.find<ApiHandler>()), permanent: true);
+    Get.put(UsuarioApi(Get.find<ApiHandler>()), permanent: true);
+    Get.put(VentaApi(Get.find<ApiHandler>()), permanent: true);
     Get.put(InventarioApi(Get.find<ApiHandler>()), permanent: true);
 
     // Base de datos local (Drift)
@@ -47,5 +53,7 @@ class AppBinding {
     Get.put(ProductoController(), permanent: true);
     Get.put(InventarioController(), permanent: true);
     Get.put(ClienteController(), permanent: true);
+    Get.put(UsuarioController(), permanent: true);
+    Get.put(VentaController(), permanent: true);
   }
 }

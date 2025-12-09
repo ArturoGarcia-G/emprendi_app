@@ -8,6 +8,7 @@ import 'package:emprendi_app/screens/productos/editar_producto_screen.dart';
 import 'package:emprendi_app/screens/productos/producto_detalle_screen.dart';
 import 'package:emprendi_app/screens/splash_screen.dart';
 import 'package:emprendi_app/screens/usuarios/usuarios_screen.dart';
+import 'package:emprendi_app/screens/ventas/agregar_venta_screen.dart';
 import 'package:get/route_manager.dart';
 import './pages_routes.dart';
 
@@ -69,6 +70,16 @@ final List<GetPage> pages = <GetPage>[
       return const UsuariosScreen();
     },
     transition: Transition.topLevel,
+    transitionDuration: const Duration(milliseconds: 300),
+  ),
+
+  //Ventas
+  GetPage(
+    name: PagesRoutes.agregarVentaScreen,
+    page: () {
+      return const AgregarVentaScreen();
+    },
+    transition: Transition.rightToLeft,
     transitionDuration: const Duration(milliseconds: 300),
   ),
 ];

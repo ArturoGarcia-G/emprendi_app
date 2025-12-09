@@ -30,6 +30,7 @@ class StatusGlobal extends StatelessWidget {
   static final Map<String, String> _statusCategory = {
     'sincronizado': 'success',
     'activo': 'success',
+    'activa': 'success',
     'pendiente': 'warning',
     'en_proceso': 'warning',
     'eliminado': 'error',

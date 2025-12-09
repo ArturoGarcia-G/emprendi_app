@@ -26,4 +26,7 @@ class PagesRoutes {
 
   //Usuarios
   static const gestorUsuariosScreen = '/gestor-usuarios';
+
+  //Ventas
+  static const agregarVentaScreen = '/agregar-venta';
 }
