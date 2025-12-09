@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import '../database/app_database.dart';
 import 'package:emprendi_app/consts/status_consts.dart';
 import 'package:emprendi_app/models/producto.dart' as model;
+import 'package:emprendi_app/models/inventario_movimiento.dart' as movimiento_model;
 
 class InventarioMovimientoLocalRepo {
   final AppDatabase db;
@@ -79,5 +80,76 @@ class InventarioMovimientoLocalRepo {
             statusSincronizacion: const Value(StatusConsts.sincronizado),
           ),
         );
+  }
+
+  // Método para listar movimientos de inventario con información del producto
+  Future<List<movimiento_model.InventarioMovimiento>> listarMovimientos() async {
+    // Query con LEFT JOIN a la tabla productos
+    final query = db.select(db.inventarioMovimientos).join([
+      leftOuterJoin(db.productos, db.productos.uuid.equalsExp(db.inventarioMovimientos.productoId))
+    ]);
+
+    final results = await query.get();
+
+    // Mapeamos los resultados incluyendo información del producto
+    return results.map((row) {
+      final movimientoEntity = row.readTable(db.inventarioMovimientos);
+      final productoEntity = row.readTableOrNull(db.productos);
+
+      return movimiento_model.InventarioMovimiento(
+        inventarioMovimientoId: movimientoEntity.inventarioMovimientoId,
+        productoId: movimientoEntity.productoId,
+        ventaId: movimientoEntity.ventaId,
+        cantidad: movimientoEntity.cantidad,
+        descripcion: movimientoEntity.descripcion,
+        tipo: movimientoEntity.tipo,
+        registroFecha: movimientoEntity.registroFecha,
+        statusSincronizacion: movimientoEntity.statusSincronizacion,
+        // Información del producto desde el LEFT JOIN
+        productoNombre: productoEntity?.nombre,
+        productoSku: productoEntity?.sku,
+      );
+    }).toList();
+  }
+
+  // Método para sincronizar un movimiento desde el API
+  Future<void> upsertMovimiento(movimiento_model.InventarioMovimiento movimiento) async {
+    final companion = InventarioMovimientosCompanion(
+      inventarioMovimientoId: Value(movimiento.inventarioMovimientoId ?? const Uuid().v4()),
+      productoId: Value(movimiento.productoId ?? ''),
+      ventaId: Value(movimiento.ventaId),
+      cantidad: Value(movimiento.cantidad ?? 0),
+      descripcion: Value(movimiento.descripcion ?? ''),
+      tipo: Value(movimiento.tipo ?? ''),
+      registroFecha: Value(movimiento.registroFecha ?? DateTime.now()),
+      statusSincronizacion: const Value(StatusConsts.sincronizado),
+    );
+    await db.into(db.inventarioMovimientos).insertOnConflictUpdate(companion);
+  }
+
+  // Método para obtener un movimiento específico con información del producto
+  Future<movimiento_model.InventarioMovimiento> obtenerMovimiento({required String movimientoId}) async {
+    // Query con LEFT JOIN para obtener un movimiento específico con información del producto
+    final query = db.select(db.inventarioMovimientos).join([
+      leftOuterJoin(db.productos, db.productos.uuid.equalsExp(db.inventarioMovimientos.productoId))
+    ])..where(db.inventarioMovimientos.inventarioMovimientoId.equals(movimientoId));
+
+    final result = await query.getSingle();
+    final movimientoEntity = result.readTable(db.inventarioMovimientos);
+    final productoEntity = result.readTableOrNull(db.productos);
+
+    return movimiento_model.InventarioMovimiento(
+      inventarioMovimientoId: movimientoEntity.inventarioMovimientoId,
+      productoId: movimientoEntity.productoId,
+      ventaId: movimientoEntity.ventaId,
+      cantidad: movimientoEntity.cantidad,
+      descripcion: movimientoEntity.descripcion,
+      tipo: movimientoEntity.tipo,
+      registroFecha: movimientoEntity.registroFecha,
+      statusSincronizacion: movimientoEntity.statusSincronizacion,
+      // Información del producto desde el LEFT JOIN
+      productoNombre: productoEntity?.nombre,
+      productoSku: productoEntity?.sku,
+    );
   }
 }

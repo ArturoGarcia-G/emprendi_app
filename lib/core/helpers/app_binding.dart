@@ -8,6 +8,7 @@ import 'package:emprendi_app/api/venta_api.dart';
 import 'package:emprendi_app/controllers/auth_controller.dart';
 import 'package:emprendi_app/controllers/cliente_controller.dart';
 import 'package:emprendi_app/controllers/inventario_controller.dart';
+import 'package:emprendi_app/controllers/inventario_movimiento_controller.dart';
 import 'package:emprendi_app/controllers/producto_controller.dart';
 import 'package:emprendi_app/controllers/theme_controller.dart';
 import 'package:emprendi_app/controllers/usuario_controller.dart';
@@ -52,6 +53,7 @@ class AppBinding {
     Get.put(AuthController(), permanent: true);
     Get.put(ProductoController(), permanent: true);
     Get.put(InventarioController(), permanent: true);
+    Get.put(InventarioMovimientoController(), permanent: true);
     Get.put(ClienteController(), permanent: true);
     Get.put(UsuarioController(), permanent: true);
     Get.put(VentaController(), permanent: true);

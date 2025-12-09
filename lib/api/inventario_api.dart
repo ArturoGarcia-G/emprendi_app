@@ -1,5 +1,4 @@
-import 'package:emprendi_app/models/producto.dart';
-
+import 'package:emprendi_app/models/inventario_movimiento.dart';
 import 'api_handler.dart';
 
 class InventarioApi {
@@ -25,6 +24,36 @@ class InventarioApi {
         'descripcion': descripcion,
         'tipo': tipo,
       });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Listar movimientos de inventario
+  Future<List<InventarioMovimiento>> listarMovimientos({
+    Map<String, dynamic>? filtros,
+  }) async {
+    try {
+      final response = await _apiHandler.get('inventario-movimientos', '', filtros ?? {});
+
+      final List<dynamic> data = response['data'];
+
+      return data.map((json) => InventarioMovimiento.fromJson(json)).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Obtener un movimiento específico
+  Future<InventarioMovimiento> obtenerMovimiento({
+    required String movimientoId,
+  }) async {
+    try {
+      final response = await _apiHandler.get('inventario-movimientos', movimientoId, {});
+
+      final Map<String, dynamic> data = response;
+
+      return InventarioMovimiento.fromJson(data);
     } catch (e) {
       rethrow;
     }

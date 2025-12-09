@@ -16,6 +16,12 @@ class InventarioMovimiento {
   String? registroAutorId;
   String? statusSincronizacion;
 
+  // Información del producto (solo para consultas locales, no se envía al API)
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  String? productoNombre;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  String? productoSku;
+
   InventarioMovimiento({
     this.inventarioMovimientoId,
     this.negocioId,
@@ -27,6 +33,8 @@ class InventarioMovimiento {
     this.registroFecha,
     this.registroAutorId,
     this.statusSincronizacion,
+    this.productoNombre,
+    this.productoSku,
   });
 
   factory InventarioMovimiento.fromJson(Map<String, dynamic> json) =>
