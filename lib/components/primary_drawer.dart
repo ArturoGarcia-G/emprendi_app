@@ -41,10 +41,16 @@ class PrimaryDrawer extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const CircleAvatar(
-                        radius: 28,
-                        backgroundImage: NetworkImage(
-                          'https://i.pravatar.cc/150?img=3',
+                      Container(
+                        decoration: BoxDecoration(
+                          color: colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.person_outline_rounded,
+                          color: colorScheme.onPrimaryContainer,
+                          size: 30,
                         ),
                       ),
                       const SizedBox(width: 12),

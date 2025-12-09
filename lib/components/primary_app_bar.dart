@@ -37,9 +37,17 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
             // Avatar clickable para abrir drawer
             GestureDetector(
               onTap: () => Scaffold.of(context).openDrawer(),
-              child: CircleAvatar(
-                radius: 20,
-                //backgroundImage: NetworkImage(avatarUrl),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: const EdgeInsets.all(8),
+                child: Icon(
+                  Icons.person_outline_rounded,
+                  color: colorScheme.onPrimaryContainer,
+                  size: 25,
+                ),
               ),
             ),
             const SizedBox(width: 12),
