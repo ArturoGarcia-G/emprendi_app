@@ -152,4 +152,60 @@ class VentaLocalRepository {
       statusSincronizacion: Value(StatusConsts.sincronizado),
     ));
   }
+
+  // Obtener venta con sus detalles
+  Future<Map<String, dynamic>> obtenerVentaConDetalles({required String ventaId}) async {
+    // Obtener la venta con información del cliente
+    final venta = await obtenerVenta(ventaId: ventaId);
+
+    // Obtener los detalles con información del producto
+    final query = db.select(db.ventasDetalle).join([
+      leftOuterJoin(db.productos, db.productos.uuid.equalsExp(db.ventasDetalle.productoId))
+    ])..where(db.ventasDetalle.ventaId.equals(ventaId));
+
+    final results = await query.get();
+
+    final detalles = results.map((row) {
+      final detalleEntity = row.readTable(db.ventasDetalle);
+      final productoEntity = row.readTableOrNull(db.productos);
+
+      return {
+        'detalle': detalle_model.VentaDetalle(
+          ventaDetalleId: detalleEntity.ventaDetalleId,
+          ventaId: detalleEntity.ventaId,
+          negocioId: detalleEntity.negocioId,
+          productoId: detalleEntity.productoId,
+          precioUnitario: detalleEntity.precioUnitario,
+          cantidad: detalleEntity.cantidad,
+          subtotal: detalleEntity.subtotal,
+          registroFecha: detalleEntity.registroFecha,
+          registroAutorId: detalleEntity.registroAutorId,
+          actualizacionFecha: detalleEntity.actualizacionFecha,
+          actualizacionAutorId: detalleEntity.actualizacionAutorId,
+          statusSincronizacion: detalleEntity.statusSincronizacion,
+        ),
+        'producto': productoEntity != null ? {
+          'productoId': productoEntity.uuid,
+          'nombre': productoEntity.nombre,
+          'sku': productoEntity.sku,
+          'precio': productoEntity.precio,
+        } : null,
+      };
+    }).toList();
+
+    return {
+      'venta': venta,
+      'detalles': detalles,
+    };
+  }
+
+  // Cancelar venta (cambiar status a cancelada)
+  Future<void> cancelarVenta({required String ventaId}) async {
+    await (db.update(db.ventas)..where((v) => v.ventaId.equals(ventaId)))
+        .write(VentasCompanion(
+      status: const Value('cancelada'),
+      actualizacionFecha: Value(DateTime.now()),
+      statusSincronizacion: const Value(StatusConsts.edicionPendiente),
+    ));
+  }
 }

@@ -2,8 +2,10 @@ import 'package:emprendi_app/components/status_global.dart';
 import 'package:emprendi_app/consts/status_consts.dart';
 import 'package:emprendi_app/core/themes/color_palette.dart';
 import 'package:emprendi_app/models/venta.dart';
+import 'package:emprendi_app/routes/pages_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class CardVenta extends StatelessWidget {
   final Venta venta;
@@ -17,10 +19,17 @@ class CardVenta extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-          child: Row(
+      child: GestureDetector(
+        onTap: () {
+          Get.toNamed(
+            PagesRoutes.ventaDetalleScreen,
+            arguments: venta.ventaId,
+          );
+        },
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            child: Row(
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -88,6 +97,7 @@ class CardVenta extends StatelessWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

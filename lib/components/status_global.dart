@@ -35,6 +35,7 @@ class StatusGlobal extends StatelessWidget {
     'en_proceso': 'warning',
     'eliminado': 'error',
     'cancelado': 'error',
+    'cancelada': 'error',
     'borrador': 'info',
     'archivado': 'info',
   };

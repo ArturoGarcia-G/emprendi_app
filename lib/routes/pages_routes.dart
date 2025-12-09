@@ -29,4 +29,5 @@ class PagesRoutes {
 
   //Ventas
   static const agregarVentaScreen = '/agregar-venta';
+  static const ventaDetalleScreen = '/detalle-venta';
 }

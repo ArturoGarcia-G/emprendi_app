@@ -7,6 +7,7 @@ class Venta {
   String? ventaId;
   String? clienteId;
   String? negocioId;
+  @JsonKey(fromJson: _doubleFromJson, toJson: _doubleToJson)
   double? total;
   int? folio;
   String? status;
@@ -43,3 +44,16 @@ class Venta {
 
   Map<String, dynamic> toJson() => _$VentaToJson(this);
 }
+
+// Funciones de conversión para el campo total
+double? _doubleFromJson(dynamic value) {
+  if (value == null) return null;
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is String) {
+    return double.tryParse(value);
+  }
+  return null;
+}
+
+dynamic _doubleToJson(double? value) => value;

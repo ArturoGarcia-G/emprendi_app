@@ -53,4 +53,13 @@ class VentaApi {
       rethrow;
     }
   }
+
+  // Cancelar venta
+  Future<void> cancelarVenta({required String ventaId}) async {
+    try {
+      await _apiHandler.patch('ventas', '$ventaId/cancelar', {});
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -138,4 +138,39 @@ class VentaController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  // Método para obtener una venta con sus detalles
+  Future<Map<String, dynamic>> obtenerVentaConDetalles({
+    required String ventaId,
+  }) async {
+    try {
+      final localRepo = VentaLocalRepository(AppDatabase());
+      return await localRepo.obtenerVentaConDetalles(ventaId: ventaId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Método para cancelar una venta
+  Future<void> cancelarVenta({required String ventaId}) async {
+    try {
+      isLoading.value = true;
+
+      // Intentar cancelar en el servidor
+      await ventaApi.cancelarVenta(ventaId: ventaId);
+
+      SnackbarHelper.show(
+        'Venta cancelada correctamente',
+        type: SnackbarType.success,
+      );
+
+      // Actualizar la lista de ventas
+      await listarVentas();
+    } catch (e) {
+      SnackbarHelper.show(e.toString());
+      rethrow;
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }
