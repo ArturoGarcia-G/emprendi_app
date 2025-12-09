@@ -85,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
+                    const Row(
                       spacing: 12,
                       children: [
                         Expanded(
