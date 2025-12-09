@@ -3,13 +3,25 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:emprendi_app/database/inventario_movimientos_table.dart';
 import 'package:emprendi_app/database/clientes_table.dart';
+import 'package:emprendi_app/database/usuarios_table.dart';
+import 'package:emprendi_app/database/ventas_table.dart';
+import 'package:emprendi_app/database/ventas_detalle_table.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'productos_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Productos, InventarioMovimientos, Clientes])
+@DriftDatabase(
+  tables: [
+    Productos,
+    InventarioMovimientos,
+    Clientes,
+    Usuarios,
+    Ventas,
+    VentasDetalle,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
